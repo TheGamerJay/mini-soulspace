@@ -16,6 +16,9 @@ the committed `railway.json` + `Dockerfile` in each subfolder.
 - **Root Directory:** `backend`
 - **Builder:** `Dockerfile` (auto-selected via `backend/railway.json`; if the UI
   still shows *Railpack*, switch it to **Dockerfile** manually).
+- **Dockerfile Path:** `Dockerfile` (relative to the root directory).
+  ⚠️ Do **not** point this at `/docker/backend.Dockerfile` — that file expects a
+  different build context and will fail with `"/requirements.txt": not found`.
 
 `backend/Dockerfile` binds to Railway's `$PORT`, and `backend/railway.json` sets
 the health check to `/health`.
@@ -70,6 +73,7 @@ page is served at `/`.
 | Symptom                                   | Cause / Fix                                                        |
 | ----------------------------------------- | ----------------------------------------------------------------- |
 | *Failed to build an image* at root        | Root Directory not set — point the service at `backend`/`frontend`.|
+| `"/requirements.txt": not found`          | Dockerfile Path points at `/docker/backend.Dockerfile` with root context. Set Root Directory = `backend` and Dockerfile Path = `Dockerfile`. |
 | Build ignores the Dockerfile              | Builder still on Railpack — switch to **Dockerfile**.             |
 | App builds but crashes / restarts         | Not binding `$PORT` — the committed Dockerfiles already handle it. |
 | `/health/ready` shows `database: error`   | `DATABASE_URL` not referencing `${{Postgres.DATABASE_URL}}`.       |
