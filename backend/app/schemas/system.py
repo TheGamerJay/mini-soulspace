@@ -14,6 +14,17 @@ class RootResponse(BaseModel):
 
 
 class HealthResponse(BaseModel):
-    """Response body for ``GET /health``."""
+    """Response body for ``GET /health`` (liveness)."""
 
     status: str
+
+
+class ReadinessResponse(BaseModel):
+    """Response body for ``GET /health/ready`` (readiness).
+
+    ``status`` is ``ready`` when every dependency check passes, otherwise
+    ``degraded``. ``checks`` maps each dependency to ``ok`` or an error label.
+    """
+
+    status: str
+    checks: dict[str, str]

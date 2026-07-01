@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from functools import lru_cache
 
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -43,6 +44,23 @@ class Settings(BaseSettings):
     # --- Security / CORS -----------------------------------------------------
     SECRET_KEY: str = "change-me-in-production"
     CORS_ORIGINS: list[str] = ["http://localhost:3000"]
+
+    @field_validator("DATABASE_URL", mode="after")
+    @classmethod
+    def _normalize_database_url(cls, value: str) -> str:
+        """Normalise managed-provider URLs to the psycopg3 SQLAlchemy driver.
+
+        Railway/Heroku inject ``postgres://`` or ``postgresql://`` URLs, but
+        SQLAlchemy needs the explicit ``postgresql+psycopg://`` driver prefix.
+        """
+
+        if value.startswith("postgresql+"):
+            return value
+        if value.startswith("postgresql://"):
+            return value.replace("postgresql://", "postgresql+psycopg://", 1)
+        if value.startswith("postgres://"):
+            return value.replace("postgres://", "postgresql+psycopg://", 1)
+        return value
 
 
 @lru_cache

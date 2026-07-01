@@ -13,6 +13,9 @@ engine = create_engine(
     settings.DATABASE_URL,
     pool_pre_ping=True,
     future=True,
+    # Fail fast instead of hanging when the database is unreachable
+    # (keeps readiness checks and cold starts responsive).
+    connect_args={"connect_timeout": 10},
 )
 
 SessionLocal = sessionmaker(
