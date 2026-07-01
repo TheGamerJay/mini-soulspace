@@ -119,11 +119,12 @@ cd backend
 uvicorn app.main:app --reload
 ```
 
-Backend runs at http://localhost:8000 — verify:
+Backend runs at http://localhost:8000 — verify (API is served under `/api`):
 
 ```powershell
-curl http://localhost:8000/          # {"app":"Mini SoulSpace","status":"running","phase":"0"}
-curl http://localhost:8000/health    # {"status":"healthy"}
+curl http://localhost:8000/api           # {"app":"Mini SoulSpace","status":"running","phase":"0"}
+curl http://localhost:8000/api/health    # {"status":"healthy"}
+curl http://localhost:8000/api/health/ready  # readiness: Postgres + Redis checks
 ```
 
 Interactive API docs: http://localhost:8000/docs
@@ -177,6 +178,19 @@ If running Ollama locally, pull the configured models:
 
 Or use the Dockerised Ollama service (`docker compose --profile app up -d ollama`)
 and pull inside the container. Endpoint: `http://localhost:11434`.
+
+## ☁️ Deployment
+
+Mini SoulSpace deploys as a **single unified service** (one container): the
+Next.js frontend is built to a static export and served by the FastAPI backend
+alongside the API. See [`docs/DEPLOY_RAILWAY.md`](docs/DEPLOY_RAILWAY.md).
+
+Build/run the production container locally:
+
+```powershell
+docker build -t mini-soulspace .
+docker run -p 8000:8000 --env-file .env mini-soulspace   # http://localhost:8000
+```
 
 ## 📍 Current Phase
 

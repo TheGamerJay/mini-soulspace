@@ -28,7 +28,7 @@ class Settings(BaseSettings):
     APP_PHASE: str = "0"
     ENVIRONMENT: str = "development"
     DEBUG: bool = True
-    API_PREFIX: str = ""
+    API_PREFIX: str = "/api"
 
     # --- Datastores ----------------------------------------------------------
     DATABASE_URL: str = "postgresql+psycopg://soulspace:soulspace@localhost:5432/soulspace"

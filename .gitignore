@@ -33,6 +33,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# ─── Build output ────────────────────────────────────────────
+# Frontend static export copied into the backend by the unified Docker image.
+backend/static/
+
 # ─── Docker / data ───────────────────────────────────────────
 postgres_data/
 redis_data/

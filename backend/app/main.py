@@ -7,15 +7,21 @@ only. Business logic lives in ``app.services`` and ``app.brains``.
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from app.api.router import api_router
 from app.core.config import settings
 from app.core.logging import configure_logging, get_logger
 
 logger = get_logger(__name__)
+
+# Directory holding the built frontend (Next.js static export). Populated by the
+# unified Docker image; absent during local backend-only development.
+STATIC_DIR = Path(__file__).resolve().parent.parent / "static"
 
 
 @asynccontextmanager
@@ -52,6 +58,15 @@ def create_app() -> FastAPI:
     )
 
     app.include_router(api_router, prefix=settings.API_PREFIX)
+
+    # Serve the built frontend at the root. Registered last so it acts as a
+    # catch-all fallback while explicit /api routes still take priority.
+    if STATIC_DIR.is_dir():
+        app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="frontend")
+        logger.info("Serving frontend static build from %s", STATIC_DIR)
+    else:
+        logger.info("No frontend build found at %s (API-only mode)", STATIC_DIR)
+
     return app
 
 
