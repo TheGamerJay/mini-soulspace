@@ -1,0 +1,25 @@
+# Mini SoulSpace — backend runtime dependencies
+# Pinned to compatible minor ranges for reproducible, production-grade installs.
+
+# Web framework / server
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+
+# Configuration & validation
+pydantic==2.10.4
+pydantic-settings==2.7.1
+
+# Database
+SQLAlchemy==2.0.36
+alembic==1.14.0
+psycopg[binary]==3.2.3
+pgvector==0.3.6
+
+# Cache / queues
+redis==5.2.1
+
+# AI / Ollama HTTP client
+httpx==0.28.1
+
+# Utilities
+python-dotenv==1.0.1

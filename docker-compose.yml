@@ -1,0 +1,76 @@
+# Mini SoulSpace — local development stack.
+#
+# Core datastores (postgres + redis) always start. The backend and ollama
+# services are grouped under the "app" profile so you can bring up just the
+# datastores (`docker compose up`) or the full stack
+# (`docker compose --profile app up`).
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: soulspace-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-soulspace}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-soulspace}
+      POSTGRES_DB: ${POSTGRES_DB:-soulspace}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-soulspace}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: soulspace-redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    profiles: ["app"]
+    build:
+      context: ./backend
+      dockerfile: ../docker/backend.Dockerfile
+    container_name: soulspace-backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-soulspace}:${POSTGRES_PASSWORD:-soulspace}@postgres:5432/${POSTGRES_DB:-soulspace}
+      REDIS_URL: redis://redis:6379/0
+      OLLAMA_URL: http://ollama:11434
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  ollama:
+    profiles: ["app"]
+    image: ollama/ollama:latest
+    container_name: soulspace-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+
+volumes:
+  postgres_data:
+  redis_data:
+  ollama_data:

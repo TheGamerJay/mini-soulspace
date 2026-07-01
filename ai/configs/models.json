@@ -1,0 +1,26 @@
+{
+  "provider": "ollama",
+  "ollama_url": "http://localhost:11434",
+  "models": {
+    "main": {
+      "name": "qwen3:14b",
+      "role": "Primary reasoning and reflection model.",
+      "temperature": 0.7
+    },
+    "fast": {
+      "name": "llama3.1:8b",
+      "role": "Low-latency responses and lightweight tasks.",
+      "temperature": 0.6
+    },
+    "tag": {
+      "name": "gemma3:4b",
+      "role": "Tagging, classification and short structured outputs.",
+      "temperature": 0.2
+    },
+    "coder": {
+      "name": "qwen2.5-coder:14b",
+      "role": "Code generation and structured builder tasks.",
+      "temperature": 0.2
+    }
+  }
+}
