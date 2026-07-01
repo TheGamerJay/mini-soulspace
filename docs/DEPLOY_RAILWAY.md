@@ -54,7 +54,12 @@ to `./static`, which FastAPI mounts at `/`.
 > URL to the `postgresql+psycopg://` SQLAlchemy driver.
 
 ### Networking
-Generate a public domain. Everything is served from it:
+Generate a public domain. Railway routes to **port 8080** by default, and the
+container binds to `8080` (overridden by `$PORT` if Railway injects it), so the
+target port matches out of the box. If the domain shows a *target port* field,
+set it to **8080**.
+
+Everything is served from the domain:
 - `/`                     → landing page (SoulDiary UI)
 - `/api`                  → `{"app":"Mini SoulSpace","status":"running","phase":"0"}`
 - `/api/health`           → `{"status":"healthy"}`
@@ -81,8 +86,8 @@ To reproduce the unified production container locally:
 
 ```powershell
 docker build -t mini-soulspace .
-docker run -p 8000:8000 --env-file .env mini-soulspace
-# open http://localhost:8000
+docker run -p 8080:8080 --env-file .env mini-soulspace
+# open http://localhost:8080
 ```
 
 ---

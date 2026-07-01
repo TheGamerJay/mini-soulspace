@@ -189,7 +189,7 @@ Build/run the production container locally:
 
 ```powershell
 docker build -t mini-soulspace .
-docker run -p 8000:8000 --env-file .env mini-soulspace   # http://localhost:8000
+docker run -p 8080:8080 --env-file .env mini-soulspace   # http://localhost:8080
 ```
 
 ## 📍 Current Phase

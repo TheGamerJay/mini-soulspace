@@ -31,7 +31,8 @@ COPY backend/ ./
 # Built frontend -> ./static, which FastAPI mounts at "/".
 COPY --from=frontend /frontend/out ./static
 
-EXPOSE 8000
+# Railway routes to port 8080 by default; bind there unless $PORT overrides.
+EXPOSE 8080
 
 # Shell form so ${PORT} is expanded at runtime by the platform.
-CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}"]
