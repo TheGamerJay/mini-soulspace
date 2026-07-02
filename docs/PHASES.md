@@ -74,10 +74,24 @@ Reuses the Phase 2 SoulBook service (no duplicated data access). Structured
 - [Input Receiver](INPUT_RECEIVER.md) — purpose, schema, validation, contract.
 - Source: `backend/app/orchestra/` · Tests: `backend/tests/test_input_receiver.py`.
 
+## Phase 3.1 — Guardian Engine ✅ (current)
+
+The **second Orchestra node** (the protector) — classify + protect only, **no
+AI**. Consumes the immutable `OrchestraRequest` and returns an immutable,
+versioned `GuardianResult` (schema v1.0): one primary category, emotional tone,
+and structured decisions (reflection/memory/question permissions, depth,
+identity/roleplay/safety protection, human referral, crisis flag, confidence,
+reasoning). Deterministic + rule-based; **safety always wins**; when uncertain,
+the safer path. Structured `GuardianError` on malformed input. **100% coverage**
+of `app.orchestra.guardian`, testable without the rest of the Orchestra.
+
+- [Guardian Engine](GUARDIAN_ENGINE.md) · Source: `backend/app/orchestra/guardian/`.
+
 ## Future roadmap
 
-- **Phase 3.1+** — remaining Orchestra nodes (Safety Checker → … → Final Responder),
-  built one node at a time on the Phase 2.75 architecture and Phase 2.5 rules.
+- **Phase 3.2** — Memory Retriever (node 3), then Reflection Planner → … →
+  Final Responder, one node at a time on the Phase 2.75 architecture, Phase 2.5
+  rules, and the [Orchestra Constitution](ORCHESTRA_ENGINEERING_RULES.md).
 - **Phase 4** — Semantic memory (pgvector embeddings + recall).
 - **Phase 5** — Conversation threads on pages.
 - **Phase 6** — Emotional analytics, charts and timeline.

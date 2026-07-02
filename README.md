@@ -258,6 +258,13 @@ versioned `OrchestraRequest` (facts only — **no AI**), with ownership +
 relationship validation and 100% unit coverage. See
 [Input Receiver](docs/INPUT_RECEIVER.md).
 
+**Phase 3.1 — Guardian Engine** builds the second node
+(`backend/app/orchestra/guardian/`): the protector. It classifies the request
+(category + emotional tone) and returns an immutable `GuardianResult` of
+structured decisions — reflection/memory/question permissions, identity &
+safety protection, human referral, crisis flag, confidence — deterministically,
+**no AI**, safety-first, 100% coverage. See [Guardian Engine](docs/GUARDIAN_ENGINE.md).
+
 ## 🗺️ Future Roadmap
 
 Auth → Diary storage → Reflection engine → Semantic memory → Analytics &

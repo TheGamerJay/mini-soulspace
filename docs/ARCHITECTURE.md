@@ -176,10 +176,15 @@ Context Builder → Prompt Builder → Response Generator → Quality Checker �
 Memory Writer → Final Responder     (Safety may short-circuit to a safe response)
 ```
 
-**Node 1 — Input Receiver — is implemented (Phase 3.0)** in
-`backend/app/orchestra/`: it packages application state into an immutable,
-versioned `OrchestraRequest` (facts only, no AI). See
-[Input Receiver](INPUT_RECEIVER.md). The remaining nodes are still architecture.
+**Nodes 1–2 are implemented; no AI yet.**
+- **Node 1 — Input Receiver (Phase 3.0)** — packages application state into an
+  immutable, versioned `OrchestraRequest`. See [Input Receiver](INPUT_RECEIVER.md).
+- **Node 2 — Guardian Engine (Phase 3.1)** — the protector: classifies the
+  request and returns an immutable `GuardianResult` (category, tone, and
+  structured reflection/memory/identity/safety decisions). Deterministic,
+  rule-based, safety-first. See [Guardian Engine](GUARDIAN_ENGINE.md).
+
+The remaining nodes (3–10) are still architecture.
 
 Every node must obey the permanent
 [Orchestra Engineering Rules](ORCHESTRA_ENGINEERING_RULES.md) — the engineering
