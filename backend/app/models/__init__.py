@@ -5,6 +5,7 @@ Alembic autogeneration and test schema creation.
 """
 
 from app.models.auth import AgreementDocument, RefreshSession, UserAgreement
+from app.models.memory import SoulMemory
 from app.models.preferences import UserPreferences
 from app.models.soulbook import (
     ContentFormat,
@@ -30,4 +31,5 @@ __all__ = [
     "SoulRecentBook",
     "SoulRecentChapter",
     "ContentFormat",
+    "SoulMemory",
 ]

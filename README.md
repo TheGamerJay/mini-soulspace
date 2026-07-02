@@ -265,6 +265,13 @@ structured decisions — reflection/memory/question permissions, identity &
 safety protection, human referral, crisis flag, confidence — deterministically,
 **no AI**, safety-first, 100% coverage. See [Guardian Engine](docs/GUARDIAN_ENGINE.md).
 
+**Phase 3.2 — Memory Retriever** builds the third node
+(`backend/app/orchestra/memory/`): "the Memory Librarian". It honors the Guardian
+and retrieves the minimum set of relevant, user-scoped memories (from the new
+`soul_memories` store) into an immutable `RetrievalResult`, ordered by priority
+then relevance — retrieve only, **no AI**, no fabrication, 100% coverage. See
+[Memory Retriever](docs/MEMORY_RETRIEVER.md).
+
 ## 🗺️ Future Roadmap
 
 Auth → Diary storage → Reflection engine → Semantic memory → Analytics &

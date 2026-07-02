@@ -87,9 +87,22 @@ of `app.orchestra.guardian`, testable without the rest of the Orchestra.
 
 - [Guardian Engine](GUARDIAN_ENGINE.md) · Source: `backend/app/orchestra/guardian/`.
 
+## Phase 3.2 — Memory Retriever ✅ (current)
+
+The **third Orchestra node** ("the Memory Librarian") — retrieve only, **no AI,
+no storage**. Consumes the `OrchestraRequest` + `GuardianResult`; honors the
+Guardian (`allow_memory_retrieval == false` → empty, never bypassed). Introduces
+the `soul_memories` store (migration 0003, populated later by the Memory Writer)
+and a `MemorySource` interface so future semantic/graph retrieval plugs in.
+Returns an immutable, versioned `RetrievalResult` of `RetrievedMemory` objects
+ordered by priority (Critical→Low) then relevance; relevant-only; capped;
+never fabricates. **100% coverage** of `app.orchestra.memory`.
+
+- [Memory Retriever](MEMORY_RETRIEVER.md) · Source: `backend/app/orchestra/memory/`.
+
 ## Future roadmap
 
-- **Phase 3.2** — Memory Retriever (node 3), then Reflection Planner → … →
+- **Phase 3.3** — Reflection Planner (node 4), then Context Builder → … →
   Final Responder, one node at a time on the Phase 2.75 architecture, Phase 2.5
   rules, and the [Orchestra Constitution](ORCHESTRA_ENGINEERING_RULES.md).
 - **Phase 4** — Semantic memory (pgvector embeddings + recall).
