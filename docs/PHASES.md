@@ -48,6 +48,20 @@ rules the future Soul Companion Engine must follow:
 
 **Phase 3 will build the first Soul Companion Engine using these rules.**
 
+## Phase 2.75 — Soul Intelligence Architecture ✅ (current)
+
+Documentation & architecture only — **no AI runtime, no behavior change**.
+Designs the permanent reasoning pipeline ("the Orchestra") every future model
+must follow. The LLM is not the brain — the Orchestra is; models are replaceable,
+the Soul Companion is not.
+
+- [Soul Intelligence Architecture](SOUL_INTELLIGENCE_ARCHITECTURE.md) — philosophy + 10-node pipeline.
+- [Orchestra Nodes](ORCHESTRA_NODES.md) — each node's purpose/inputs/outputs/failure/contract.
+- [Conversation Flow](CONVERSATION_FLOW.md) — 11 flows + book open/close experience.
+- [Context Strategy](CONTEXT_STRATEGY.md) · [Quality Guardrails](QUALITY_GUARDRAILS.md).
+- [Memory Integration](MEMORY_INTEGRATION.md) · [Orchestration Events](ORCHESTRATION_EVENTS.md).
+- [Future API Contracts](FUTURE_API_CONTRACTS.md) · [Phase 2.75 Summary](PHASE_2_75_SUMMARY.md).
+
 ## Future roadmap
 
 - **Phase 3** — Reflection engine (the diary that talks back), built on the Phase 2.5 rules.

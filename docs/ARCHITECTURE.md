@@ -163,6 +163,25 @@ reflections (`data-slot="ai-reflection"`), pages store clean text for the Memory
 and Page layers, and Phase 0's `ai/configs/models.json` + `MAIN/FAST/TAG/CODER`
 settings define the models.
 
+## Soul Intelligence — the Orchestra (Phase 2.75 — architecture only)
+
+**The LLM is not the brain; the Orchestra is.** A reflection is produced by a
+permanent, loosely-coupled pipeline of 10 specialist nodes — models plug in by
+role and are replaceable without redesign. **No orchestration runtime is built
+yet.**
+
+```
+Input Receiver → Safety Checker → Memory Retriever → Reflection Planner →
+Context Builder → Prompt Builder → Response Generator → Quality Checker →
+Memory Writer → Final Responder     (Safety may short-circuit to a safe response)
+```
+
+- [Soul Intelligence Architecture](SOUL_INTELLIGENCE_ARCHITECTURE.md) — pipeline & philosophy.
+- [Orchestra Nodes](ORCHESTRA_NODES.md) · [Future API Contracts](FUTURE_API_CONTRACTS.md) — node contracts.
+- [Conversation Flow](CONVERSATION_FLOW.md) — flows + book open/close experience.
+- [Context Strategy](CONTEXT_STRATEGY.md) · [Quality Guardrails](QUALITY_GUARDRAILS.md) ·
+  [Memory Integration](MEMORY_INTEGRATION.md) · [Orchestration Events](ORCHESTRATION_EVENTS.md).
+
 ## Configuration
 
 Every runtime value is environment-driven through `app.core.config.Settings`.

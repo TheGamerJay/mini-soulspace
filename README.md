@@ -239,6 +239,19 @@ built (no runtime code in this phase):
 
 Phase 3 will build the first Soul Companion Engine using these rules.
 
+### Soul Intelligence Architecture (Phase 2.75 — docs only)
+
+**The LLM is not the brain — the Orchestra is.** The permanent 10-node reasoning
+pipeline (Input → Safety → Memory → Plan → Context → Prompt → Generate → Quality
+→ Memory Write → Respond) that every future model plugs into by role:
+
+- [Soul Intelligence Architecture](docs/SOUL_INTELLIGENCE_ARCHITECTURE.md)
+- [Orchestra Nodes](docs/ORCHESTRA_NODES.md)
+- [Conversation Flow](docs/CONVERSATION_FLOW.md) (incl. book open/close experience)
+- [Context Strategy](docs/CONTEXT_STRATEGY.md) · [Quality Guardrails](docs/QUALITY_GUARDRAILS.md)
+- [Memory Integration](docs/MEMORY_INTEGRATION.md) · [Orchestration Events](docs/ORCHESTRATION_EVENTS.md)
+- [Future API Contracts](docs/FUTURE_API_CONTRACTS.md) · [Phase 2.75 Summary](docs/PHASE_2_75_SUMMARY.md)
+
 ## 🗺️ Future Roadmap
 
 Auth → Diary storage → Reflection engine → Semantic memory → Analytics &
