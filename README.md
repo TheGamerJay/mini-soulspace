@@ -194,8 +194,10 @@ docker run -p 8080:8080 --env-file .env mini-soulspace   # http://localhost:8080
 
 ## 📍 Current Phase
 
-**Phase 0 — Repository Foundation.** The complete, clean, production-ready
-scaffold: backend, frontend, AI layer, Docker, scripts and documentation.
+**Phase 1 — Authentication & User Foundation.** JWT (httpOnly cookies) with
+Argon2id hashing and rotating refresh tokens, a mandatory signup agreement,
+full user profiles (with preferences), protected routes, and a Home screen.
+Built on the Phase 0 foundation (backend, frontend, AI layer, Docker, docs).
 
 ## 🗺️ Future Roadmap
 

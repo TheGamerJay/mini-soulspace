@@ -25,7 +25,7 @@ class Settings(BaseSettings):
 
     # --- Application metadata ------------------------------------------------
     APP_NAME: str = "Mini SoulSpace"
-    APP_PHASE: str = "0"
+    APP_PHASE: str = "1"
     ENVIRONMENT: str = "development"
     DEBUG: bool = True
     API_PREFIX: str = "/api"
@@ -44,6 +44,42 @@ class Settings(BaseSettings):
     # --- Security / CORS -----------------------------------------------------
     SECRET_KEY: str = "change-me-in-production"
     CORS_ORIGINS: list[str] = ["http://localhost:3000"]
+
+    # --- JWT / session -------------------------------------------------------
+    JWT_ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_TTL_MINUTES: int = 15
+    REFRESH_TOKEN_TTL_DAYS: int = 30
+
+    # httpOnly auth cookies. COOKIE_SECURE must be True in production (HTTPS).
+    ACCESS_COOKIE_NAME: str = "ss_access"
+    REFRESH_COOKIE_NAME: str = "ss_refresh"
+    COOKIE_SECURE: bool = False
+    COOKIE_DOMAIN: str | None = None
+    REFRESH_COOKIE_PATH: str = "/api/auth"
+
+    # --- Registration policy -------------------------------------------------
+    # Minimum age is configurable and can be disabled entirely by setting it to
+    # 0 (or a negative value). Never hardcode a permanent age gate.
+    MIN_SIGNUP_AGE: int = 13
+
+    # --- Rate limiting (Redis-backed) ----------------------------------------
+    RATE_LIMIT_ENABLED: bool = True
+    LOGIN_RATE_LIMIT: int = 10  # attempts per window
+    LOGIN_RATE_WINDOW_SECONDS: int = 300
+    REGISTER_RATE_LIMIT: int = 5
+    REGISTER_RATE_WINDOW_SECONDS: int = 3600
+
+    @property
+    def min_age_enabled(self) -> bool:
+        """Whether the minimum-age gate is active."""
+
+        return self.MIN_SIGNUP_AGE > 0
+
+    @property
+    def cookie_secure(self) -> bool:
+        """Force secure cookies outside of local development."""
+
+        return self.COOKIE_SECURE or self.ENVIRONMENT.lower() in {"production", "prod"}
 
     @field_validator("DATABASE_URL", mode="after")
     @classmethod

@@ -59,6 +59,12 @@ def create_app() -> FastAPI:
 
     app.include_router(api_router, prefix=settings.API_PREFIX)
 
+    # Explicit no-trailing-slash metadata route so `/api` returns JSON instead of
+    # falling through to the static frontend catch-all.
+    @app.get(settings.API_PREFIX, include_in_schema=False)
+    def api_root() -> dict[str, str]:
+        return {"app": settings.APP_NAME, "status": "running", "phase": settings.APP_PHASE}
+
     # Serve the built frontend at the root. Registered last so it acts as a
     # catch-all fallback while explicit /api routes still take priority.
     if STATIC_DIR.is_dir():

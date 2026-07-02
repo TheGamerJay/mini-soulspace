@@ -1,9 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { PrimaryButton } from "@/components/PrimaryButton";
 
 export default function LandingPage() {
+  const router = useRouter();
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-soul-bg to-soul-surface px-6 text-center">
       <motion.h1
@@ -31,7 +33,7 @@ export default function LandingPage() {
         transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
         className="mt-12"
       >
-        <PrimaryButton>Open My SoulDiary</PrimaryButton>
+        <PrimaryButton onClick={() => router.push("/home")}>Open My SoulDiary</PrimaryButton>
       </motion.div>
     </main>
   );

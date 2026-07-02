@@ -34,5 +34,5 @@ COPY --from=frontend /frontend/out ./static
 # Railway routes to port 8080 by default; bind there unless $PORT overrides.
 EXPOSE 8080
 
-# Shell form so ${PORT} is expanded at runtime by the platform.
-CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}"]
+# Apply DB migrations, then start the server. Shell form so ${PORT} expands.
+CMD ["sh", "-c", "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}"]

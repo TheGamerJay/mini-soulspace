@@ -14,3 +14,9 @@ body {
 body {
   @apply bg-soul-bg text-soul-accent antialiased;
 }
+
+/* Suppress native password reveal icons — we use a custom 🙈/👁️ toggle. */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
