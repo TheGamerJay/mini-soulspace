@@ -12,7 +12,7 @@ from app.core.config import settings
 from app.schemas.user import UserPreferencesRead, UserRead
 
 _VALID_TIMEZONES = available_timezones()
-_PASSWORD_MIN_LENGTH = 12
+_PASSWORD_MIN_LENGTH = 9
 _PASSWORD_MAX_LENGTH = 128
 _LANGUAGE_RE = re.compile(r"^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{2,8})?$")
 
