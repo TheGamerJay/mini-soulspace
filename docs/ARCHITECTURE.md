@@ -73,6 +73,70 @@ backend so intelligence can evolve independently. See `ai/README.md`.
 
 All three run via `docker-compose.yml`.
 
+## SoulBook Engine (Phase 2)
+
+The permanent journal. No AI in this phase — it builds the durable structure
+everything else attaches to.
+
+### Schema
+
+```
+users ─1─* soul_books ─1─* soul_chapters ─1─* soul_pages
+                    └── soul_bookmarks (book/chapter/page)
+                    └── soul_recent_books / soul_recent_chapters (per-user recency)
+```
+
+- **soul_books** — `id, user_id, title, description?, cover_style, is_archived,
+  is_deleted, created_at, updated_at, last_opened_at`.
+- **soul_chapters** — `id, user_id, book_id, title, chapter_number, is_deleted,
+  timestamps, last_opened_at`.
+- **soul_pages** — `id, user_id, book_id, chapter_id, title, content,
+  page_number, content_format, timezone, word_count, character_count,
+  is_deleted, timestamps`.
+- **soul_bookmarks / soul_recent_books / soul_recent_chapters** — future-proofing
+  seams (bookmarks UI, recency lists).
+
+Soft delete (`is_deleted`) and archive (`is_archived`) everywhere; ownership is
+enforced in the service layer (every query filters by `user_id`; missing/foreign
+records raise 404).
+
+### Storage format
+
+Page content is stored as **`plain_text` or `markdown` — never HTML**. There is
+no rich-text-editor dependency; the frontend renderer controls appearance. This
+keeps content lightweight, searchable, versionable, export-friendly and
+AI-friendly.
+
+### API (all under `/api/soulbooks`, protected)
+
+Books: `GET/POST /`, `GET/PATCH/DELETE /{book}`, `POST /{book}/archive|restore`,
+`GET /search?q=`, list `?sort=recently_opened|recently_updated|alphabetical|newest|oldest`.
+Chapters: `GET/POST /{book}/chapters`, `GET/PATCH/DELETE /{book}/chapters/{ch}`.
+Pages: `GET/POST /{book}/chapters/{ch}/pages`, `GET/PATCH/DELETE .../pages/{pg}`,
+`PATCH .../pages/{pg}/autosave`.
+
+Routes are thin and call `app.services.soulbook_service` (no business logic in
+routes).
+
+### Frontend hosting note
+
+The frontend is a Next.js **static export** served by FastAPI. Dynamic SoulBook
+routes are exported once under a placeholder segment; `app/spa.py`
+(`SpaStaticFiles`) serves that template for any concrete id so deep-links and
+refreshes resolve. Screens read the real ids from the live URL
+(`lib/soulPath.ts`).
+
+### Future AI attachment points
+
+Designed so later phases attach without rebuilding the engine:
+
+- The writing page reserves a layout slot (`data-slot="ai-reflection"`) beneath
+  the user's writing for the future flow: **writing → AI reflection → follow-up
+  conversation**.
+- Pages carry `content_format` + `timezone` and clean text content, ready for
+  embeddings/memory (pgvector), summaries, exports and conversation threads —
+  each can reference `soul_pages.id` via new tables.
+
 ## Configuration
 
 Every runtime value is environment-driven through `app.core.config.Settings`.

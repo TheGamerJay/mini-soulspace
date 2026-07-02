@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 import { AuthGuard } from "@/components/AuthGuard";
 import { PrimaryButton } from "@/components/PrimaryButton";
@@ -12,7 +11,6 @@ function HomeContent() {
   const router = useRouter();
   const user = useAuthStore((s) => s.user);
   const logout = useAuthStore((s) => s.logout);
-  const [comingSoon, setComingSoon] = useState(false);
 
   const firstName = user?.display_name?.split(" ")[0] ?? "friend";
 
@@ -30,20 +28,10 @@ function HomeContent() {
         <p className="mt-4 text-xl text-soul-muted">Ready to continue your story?</p>
 
         <div className="mt-10">
-          <PrimaryButton onClick={() => setComingSoon(true)}>Open My SoulDiary</PrimaryButton>
+          <PrimaryButton onClick={() => router.push("/soul-library")}>
+            Open My SoulDiary
+          </PrimaryButton>
         </div>
-
-        {comingSoon && (
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="mt-6 max-w-md text-soul-muted"
-          >
-            Your SoulDiary is being prepared. Writing &amp; reflections arrive in{" "}
-            <span className="text-soul-primary">Phase 2</span> — your account and story are
-            ready and waiting. 💜
-          </motion.p>
-        )}
 
         <div className="mt-12 flex items-center gap-6 text-sm text-soul-muted">
           <button onClick={() => router.push("/profile")} className="hover:text-soul-accent">

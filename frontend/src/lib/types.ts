@@ -34,6 +34,68 @@ export interface Agreement {
   content: string;
 }
 
+// ── SoulBook Engine ──────────────────────────────────────────────────────────
+export interface SoulBook {
+  id: string;
+  title: string;
+  description: string | null;
+  cover_style: string;
+  is_archived: boolean;
+  is_deleted: boolean;
+  created_at: string;
+  updated_at: string;
+  last_opened_at: string | null;
+  chapter_count: number;
+}
+
+export interface SoulChapter {
+  id: string;
+  book_id: string;
+  title: string;
+  chapter_number: number;
+  is_deleted: boolean;
+  created_at: string;
+  updated_at: string;
+  last_opened_at: string | null;
+  page_count: number;
+}
+
+export interface SoulPage {
+  id: string;
+  book_id: string;
+  chapter_id: string;
+  title: string;
+  content: string;
+  page_number: number;
+  content_format: "plain_text" | "markdown";
+  timezone: string | null;
+  word_count: number;
+  character_count: number;
+  is_deleted: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface PageSaveResult {
+  id: string;
+  updated_at: string;
+  word_count: number;
+  character_count: number;
+  status: string;
+}
+
+export interface SearchResults {
+  books: SoulBook[];
+  pages: SoulPage[];
+}
+
+export type SortOption =
+  | "recently_opened"
+  | "recently_updated"
+  | "alphabetical"
+  | "newest"
+  | "oldest";
+
 export interface RegisterPayload {
   display_name: string;
   email: string;

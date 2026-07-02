@@ -194,10 +194,35 @@ docker run -p 8080:8080 --env-file .env mini-soulspace   # http://localhost:8080
 
 ## 📍 Current Phase
 
-**Phase 1 — Authentication & User Foundation.** JWT (httpOnly cookies) with
-Argon2id hashing and rotating refresh tokens, a mandatory signup agreement,
-full user profiles (with preferences), protected routes, and a Home screen.
-Built on the Phase 0 foundation (backend, frontend, AI layer, Docker, docs).
+**Phase 2 — SoulBook Engine.** The permanent journal: a **Soul Library** of
+**SoulBooks**, each with **Chapters** and **Pages**. Create / rename / archive /
+restore / soft-delete SoulBooks; search and sort; write on immersive journal
+pages that **auto-save** (debounced) with manual save, live word/character
+counts, and a reserved slot for future AI reflections. Pages store as plain
+text / markdown (never HTML). Built on Phase 1 auth (ownership-scoped) and the
+Phase 0 foundation.
+
+### SoulBook API (protected, `/api/soulbooks`)
+
+```
+GET/POST                          /api/soulbooks
+GET/PATCH/DELETE                  /api/soulbooks/{book_id}
+POST                              /api/soulbooks/{book_id}/archive | /restore
+GET                               /api/soulbooks/search?q=&        (+ ?sort= on list)
+GET/POST                          /api/soulbooks/{book_id}/chapters
+GET/PATCH/DELETE                  /api/soulbooks/{book_id}/chapters/{chapter_id}
+GET/POST                          /api/soulbooks/{book_id}/chapters/{chapter_id}/pages
+GET/PATCH/DELETE                  .../pages/{page_id}
+PATCH                             .../pages/{page_id}/autosave
+```
+
+Sort options: `recently_opened`, `recently_updated`, `alphabetical`, `newest`, `oldest`.
+
+### Frontend routes
+
+`/home` · `/soul-library` · `/soulbooks/[bookId]` ·
+`/soulbooks/[bookId]/chapters/[chapterId]` ·
+`/soulbooks/[bookId]/chapters/[chapterId]/pages/[pageId]`
 
 ## 🗺️ Future Roadmap
 

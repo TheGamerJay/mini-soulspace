@@ -9,13 +9,14 @@ from __future__ import annotations
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
-
+from fastapi.responses import JSONResponse
 from app.api.router import api_router
 from app.core.config import settings
 from app.core.logging import configure_logging, get_logger
+from app.services.soulbook_service import NotFoundError
+from app.spa import SpaStaticFiles
 
 logger = get_logger(__name__)
 
@@ -57,6 +58,10 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
+    @app.exception_handler(NotFoundError)
+    async def _handle_not_found(_request: Request, exc: NotFoundError) -> JSONResponse:
+        return JSONResponse(status_code=404, content={"detail": str(exc)})
+
     app.include_router(api_router, prefix=settings.API_PREFIX)
 
     # Explicit no-trailing-slash metadata route so `/api` returns JSON instead of
@@ -68,7 +73,7 @@ def create_app() -> FastAPI:
     # Serve the built frontend at the root. Registered last so it acts as a
     # catch-all fallback while explicit /api routes still take priority.
     if STATIC_DIR.is_dir():
-        app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="frontend")
+        app.mount("/", SpaStaticFiles(directory=STATIC_DIR, html=True), name="frontend")
         logger.info("Serving frontend static build from %s", STATIC_DIR)
     else:
         logger.info("No frontend build found at %s (API-only mode)", STATIC_DIR)
