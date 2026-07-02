@@ -45,6 +45,13 @@ The "thought process" is the Orchestra: an ordered pipeline of loosely-coupled
 The **Safety Checker** may short-circuit the whole pipeline to a safe response
 (see [Safety Rules](SAFETY_RULES.md)); safety always wins.
 
+## Governing rules
+
+Every node obeys the permanent
+[Orchestra Engineering Rules](ORCHESTRA_ENGINEERING_RULES.md) (the constitution).
+Those 12 rules override implementation preferences; a design that violates one is
+revised before it is built.
+
 ## Design principles
 
 - **Loose coupling.** No node knows another node's internals — only its

@@ -181,6 +181,10 @@ Memory Writer → Final Responder     (Safety may short-circuit to a safe respon
 versioned `OrchestraRequest` (facts only, no AI). See
 [Input Receiver](INPUT_RECEIVER.md). The remaining nodes are still architecture.
 
+Every node must obey the permanent
+[Orchestra Engineering Rules](ORCHESTRA_ENGINEERING_RULES.md) — the engineering
+constitution that overrides implementation preferences.
+
 - [Soul Intelligence Architecture](SOUL_INTELLIGENCE_ARCHITECTURE.md) — pipeline & philosophy.
 - [Orchestra Nodes](ORCHESTRA_NODES.md) · [Future API Contracts](FUTURE_API_CONTRACTS.md) — node contracts.
 - [Conversation Flow](CONVERSATION_FLOW.md) — flows + book open/close experience.
