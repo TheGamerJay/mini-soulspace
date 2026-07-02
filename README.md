@@ -252,6 +252,12 @@ pipeline (Input → Safety → Memory → Plan → Context → Prompt → Genera
 - [Memory Integration](docs/MEMORY_INTEGRATION.md) · [Orchestration Events](docs/ORCHESTRATION_EVENTS.md)
 - [Future API Contracts](docs/FUTURE_API_CONTRACTS.md) · [Phase 2.75 Summary](docs/PHASE_2_75_SUMMARY.md)
 
+**Phase 3.0 — Input Receiver Engine** builds the first working Orchestra node
+(`backend/app/orchestra/`): it packages application state into an immutable,
+versioned `OrchestraRequest` (facts only — **no AI**), with ownership +
+relationship validation and 100% unit coverage. See
+[Input Receiver](docs/INPUT_RECEIVER.md).
+
 ## 🗺️ Future Roadmap
 
 Auth → Diary storage → Reflection engine → Semantic memory → Analytics &

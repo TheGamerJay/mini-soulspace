@@ -62,9 +62,22 @@ the Soul Companion is not.
 - [Memory Integration](MEMORY_INTEGRATION.md) · [Orchestration Events](ORCHESTRATION_EVENTS.md).
 - [Future API Contracts](FUTURE_API_CONTRACTS.md) · [Phase 2.75 Summary](PHASE_2_75_SUMMARY.md).
 
+## Phase 3.0 — Input Receiver Engine ✅ (current)
+
+The **first working Orchestra node** — data packaging only, **no AI**. Converts
+raw application state (authenticated user + book/chapter/page) into one
+**immutable, versioned `OrchestraRequest`** (schema v1.0) after validating
+existence, ownership, relationship integrity, content, language and timezone.
+Reuses the Phase 2 SoulBook service (no duplicated data access). Structured
+`InputValidationError` on failure; **100% unit coverage** of `app.orchestra`.
+
+- [Input Receiver](INPUT_RECEIVER.md) — purpose, schema, validation, contract.
+- Source: `backend/app/orchestra/` · Tests: `backend/tests/test_input_receiver.py`.
+
 ## Future roadmap
 
-- **Phase 3** — Reflection engine (the diary that talks back), built on the Phase 2.5 rules.
+- **Phase 3.1+** — remaining Orchestra nodes (Safety Checker → … → Final Responder),
+  built one node at a time on the Phase 2.75 architecture and Phase 2.5 rules.
 - **Phase 4** — Semantic memory (pgvector embeddings + recall).
 - **Phase 5** — Conversation threads on pages.
 - **Phase 6** — Emotional analytics, charts and timeline.

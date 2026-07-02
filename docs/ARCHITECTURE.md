@@ -176,6 +176,11 @@ Context Builder → Prompt Builder → Response Generator → Quality Checker �
 Memory Writer → Final Responder     (Safety may short-circuit to a safe response)
 ```
 
+**Node 1 — Input Receiver — is implemented (Phase 3.0)** in
+`backend/app/orchestra/`: it packages application state into an immutable,
+versioned `OrchestraRequest` (facts only, no AI). See
+[Input Receiver](INPUT_RECEIVER.md). The remaining nodes are still architecture.
+
 - [Soul Intelligence Architecture](SOUL_INTELLIGENCE_ARCHITECTURE.md) — pipeline & philosophy.
 - [Orchestra Nodes](ORCHESTRA_NODES.md) · [Future API Contracts](FUTURE_API_CONTRACTS.md) — node contracts.
 - [Conversation Flow](CONVERSATION_FLOW.md) — flows + book open/close experience.
