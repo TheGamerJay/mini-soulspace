@@ -137,6 +137,32 @@ Designed so later phases attach without rebuilding the engine:
   embeddings/memory (pgvector), summaries, exports and conversation threads —
   each can reference `soul_pages.id` via new tables.
 
+## Soul Companion (Phase 2.5 — architecture only)
+
+Before the diary "talks back," Phase 2.5 defines the permanent rules for the
+future Soul Companion Engine. **No AI runtime, memory API, crisis classifier, or
+Ollama calls are built yet** — these are design documents that Phase 3+ will
+implement:
+
+- [Soul Companion Guide](SOUL_COMPANION_GUIDE.md) — identity, personality, tone
+  (human-like but honest AI; never a professional; never sentient).
+- [Reflection Rules](REFLECTION_RULES.md) — how reflections should (and should
+  not) sound.
+- [Memory Rules](MEMORY_RULES.md) — Low/Medium/High/Critical importance,
+  per-user scoping, never invented, user-controlled.
+- [Safety Rules](SAFETY_RULES.md) — crisis triggers, required behavior, response
+  templates; never pretends to handle a crisis alone.
+- [Soul Presence Rules](SOUL_PRESENCE_RULES.md) — birthdays, milestones,
+  check-ins; meaningful, optional, never clingy.
+- [AI Prompt Architecture](AI_PROMPT_ARCHITECTURE.md) — the 8 prompt layers
+  (Identity → Safety → User → Memory → Page → Reflection → Style → Formatting)
+  and the Ollama model roles they route to.
+
+These attach to existing seams: the Phase 2 writing page reserves a slot for
+reflections (`data-slot="ai-reflection"`), pages store clean text for the Memory
+and Page layers, and Phase 0's `ai/configs/models.json` + `MAIN/FAST/TAG/CODER`
+settings define the models.
+
 ## Configuration
 
 Every runtime value is environment-driven through `app.core.config.Settings`.

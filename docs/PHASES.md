@@ -33,9 +33,24 @@ The permanent journal — no AI yet.
 - **Future AI slot:** each writing page reserves a layout region beneath the
   writing for the future flow (user writing → AI reflection → conversation).
 
+## Phase 2.5 — Soul Companion Architecture ✅ (current)
+
+Documentation & architecture only — **no AI runtime, no behavior change**.
+Defines the permanent identity, behavior, memory, safety, presence and prompt
+rules the future Soul Companion Engine must follow:
+
+- [Soul Companion Guide](SOUL_COMPANION_GUIDE.md) — identity, personality, tone.
+- [Reflection Rules](REFLECTION_RULES.md) — how the diary talks back (good vs bad).
+- [Memory Rules](MEMORY_RULES.md) — importance levels, scoping, user control.
+- [Safety Rules](SAFETY_RULES.md) — crisis-safe behavior + response templates.
+- [Soul Presence Rules](SOUL_PRESENCE_RULES.md) — meaningful, optional moments.
+- [AI Prompt Architecture](AI_PROMPT_ARCHITECTURE.md) — 8 prompt layers + model roles.
+
+**Phase 3 will build the first Soul Companion Engine using these rules.**
+
 ## Future roadmap
 
-- **Phase 3** — Reflection engine (the diary that talks back).
+- **Phase 3** — Reflection engine (the diary that talks back), built on the Phase 2.5 rules.
 - **Phase 4** — Semantic memory (pgvector embeddings + recall).
 - **Phase 5** — Conversation threads on pages.
 - **Phase 6** — Emotional analytics, charts and timeline.

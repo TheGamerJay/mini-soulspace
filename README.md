@@ -224,6 +224,21 @@ Sort options: `recently_opened`, `recently_updated`, `alphabetical`, `newest`, `
 `/soulbooks/[bookId]/chapters/[chapterId]` ·
 `/soulbooks/[bookId]/chapters/[chapterId]/pages/[pageId]`
 
+### Soul Companion Architecture (Phase 2.5 — docs only)
+
+The rules for how the SoulDiary will one day talk back — identity, reflection,
+memory, safety, presence and prompt design — are defined **before** any AI is
+built (no runtime code in this phase):
+
+- [Soul Companion Guide](docs/SOUL_COMPANION_GUIDE.md)
+- [Reflection Rules](docs/REFLECTION_RULES.md)
+- [Memory Rules](docs/MEMORY_RULES.md)
+- [Safety Rules](docs/SAFETY_RULES.md)
+- [Soul Presence Rules](docs/SOUL_PRESENCE_RULES.md)
+- [AI Prompt Architecture](docs/AI_PROMPT_ARCHITECTURE.md)
+
+Phase 3 will build the first Soul Companion Engine using these rules.
+
 ## 🗺️ Future Roadmap
 
 Auth → Diary storage → Reflection engine → Semantic memory → Analytics &
