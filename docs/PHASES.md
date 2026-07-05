@@ -112,9 +112,22 @@ Guardian's `ReflectionDepth`. **100% coverage** of `app.orchestra.planner`.
 
 - [Reflection Planner](REFLECTION_PLANNER.md) · Source: `backend/app/orchestra/planner/`.
 
+## Phase 3.4 — Context Builder ✅ (current)
+
+The **fifth Orchestra node** ("the architect") — assemble only, **no AI, no
+prompts**. Consumes all four upstream outputs and emits an immutable
+`ContextPackage` of ordered `ContextBlock`s across six layers (Identity, Guardian,
+Current Page, Memory, Reflection, Reserved). Memory appears only when the Guardian
+*and* the Planner approve; content is deduped, priority-ordered, and kept within a
+configurable `ContextBudget` (memory dropped first, then page truncated) — every
+exclusion recorded, never silently discarded. Added **Constitution Rule 13 —
+Minimum Sufficient Context**. **100% coverage** of `app.orchestra.context`.
+
+- [Context Builder](CONTEXT_BUILDER.md) · Source: `backend/app/orchestra/context/`.
+
 ## Future roadmap
 
-- **Phase 3.4** — Context Builder (node 5), then Prompt Builder → … →
+- **Phase 3.5** — Prompt Builder (node 6), then Response Generator → … →
   Final Responder, one node at a time on the Phase 2.75 architecture, Phase 2.5
   rules, and the [Orchestra Constitution](ORCHESTRA_ENGINEERING_RULES.md).
 - **Phase 4** — Semantic memory (pgvector embeddings + recall).

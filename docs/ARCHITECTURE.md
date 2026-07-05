@@ -191,8 +191,13 @@ Memory Writer → Final Responder     (Safety may short-circuit to a safe respon
   kind* of reflection should happen (type, tone, depth, questions, memory
   referencing, celebration, listening) as an immutable `ReflectionPlan`. Honors
   Guardian caps; plan only, no AI. See [Reflection Planner](REFLECTION_PLANNER.md).
+- **Node 5 — Context Builder (Phase 3.4)** — "the architect": assembles the
+  minimal, ordered, deduplicated, budgeted `ContextPackage` (Identity · Guardian ·
+  Current Page · Memory · Reflection · Reserved) — the sole input to the Prompt
+  Builder. Memory only when Guardian + Planner approve; assemble only, no AI. See
+  [Context Builder](CONTEXT_BUILDER.md).
 
-The remaining nodes (5–10) are still architecture.
+The remaining nodes (6–10) are still architecture.
 
 Every node must obey the permanent
 [Orchestra Engineering Rules](ORCHESTRA_ENGINEERING_RULES.md) — the engineering

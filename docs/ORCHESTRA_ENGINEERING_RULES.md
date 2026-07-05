@@ -85,6 +85,16 @@ compatibility (additive, optional fields; bump the minor version).
 The Orchestra always prioritizes **correctness, safety, consistency,
 maintainability, and user trust** over speed of implementation.
 
+## Rule 13 — Minimum Sufficient Context
+
+Every Orchestra node should pass **only the minimum information required for the
+next node to succeed.** **Quality always beats quantity.** Trim the irrelevant,
+deduplicate facts, stay within budget, and record what was excluded (never
+silently discard).
+
+> Added in Phase 3.4 (the Phase 3.4 brief calls this "Rule #16"; it is the 13th
+> rule and numbered sequentially to keep the constitution gap-free).
+
 ---
 
 ## How these rules are applied today

@@ -279,6 +279,13 @@ celebration, listening — as an immutable `ReflectionPlan`, honoring Guardian c
 (blocked ⇒ No Reflection). Plan only, **no AI, no LLM**, 100% coverage. See
 [Reflection Planner](docs/REFLECTION_PLANNER.md).
 
+**Phase 3.4 — Context Builder** builds the fifth node
+(`backend/app/orchestra/context/`): "the architect". It assembles the minimal,
+ordered, deduplicated, budget-bounded `ContextPackage` (Identity · Guardian ·
+Current Page · Memory · Reflection · Reserved) that becomes the sole input to the
+Prompt Builder — memory only when the Guardian and Planner approve. Assemble only,
+**no AI**, 100% coverage. See [Context Builder](docs/CONTEXT_BUILDER.md).
+
 ## 🗺️ Future Roadmap
 
 Auth → Diary storage → Reflection engine → Semantic memory → Analytics &
