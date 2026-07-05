@@ -95,6 +95,16 @@ silently discard).
 > Added in Phase 3.4 (the Phase 3.4 brief calls this "Rule #16"; it is the 13th
 > rule and numbered sequentially to keep the constitution gap-free).
 
+## Rule 14 — Separation of Structure, Intelligence, and Language
+
+**Prompt templates define structure. The Orchestra provides intelligence. The
+LLM provides language generation. These responsibilities must never be mixed.**
+
+Templates never make decisions; the Orchestra nodes never format prose; the model
+never sets policy. Each stays in its lane.
+
+> Added in Phase 3.5 (matches the brief's "Rule #14").
+
 ---
 
 ## How these rules are applied today

@@ -196,8 +196,12 @@ Memory Writer → Final Responder     (Safety may short-circuit to a safe respon
   Current Page · Memory · Reflection · Reserved) — the sole input to the Prompt
   Builder. Memory only when Guardian + Planner approve; assemble only, no AI. See
   [Context Builder](CONTEXT_BUILDER.md).
+- **Node 6 — Prompt Builder (Phase 3.5)** — transforms the `ContextPackage` into
+  an immutable `PromptPackage`: a seven-layer system prompt, conversation
+  blueprint, versioned template (Reflection v1), model role, and generation
+  parameters. Assemble only, no LLM call. See [Prompt Builder](PROMPT_BUILDER.md).
 
-The remaining nodes (6–10) are still architecture.
+The remaining nodes (7–10) are still architecture.
 
 Every node must obey the permanent
 [Orchestra Engineering Rules](ORCHESTRA_ENGINEERING_RULES.md) — the engineering

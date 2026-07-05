@@ -286,6 +286,14 @@ Current Page · Memory · Reflection · Reserved) that becomes the sole input to
 Prompt Builder — memory only when the Guardian and Planner approve. Assemble only,
 **no AI**, 100% coverage. See [Context Builder](docs/CONTEXT_BUILDER.md).
 
+**Phase 3.5 — Prompt Builder** builds the sixth node
+(`backend/app/orchestra/prompt/`). It transforms the `ContextPackage` into an
+immutable `PromptPackage` — a seven-layer system prompt (Identity · Safety ·
+Page · Memories · Reflection Plan · Style · Formatting), a conversation
+blueprint, a versioned template (Reflection v1), a model role, and generation
+parameters. Assemble only, **no LLM call**, 100% coverage. See
+[Prompt Builder](docs/PROMPT_BUILDER.md).
+
 ## 🗺️ Future Roadmap
 
 Auth → Diary storage → Reflection engine → Semantic memory → Analytics &

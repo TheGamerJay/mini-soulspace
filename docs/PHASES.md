@@ -125,11 +125,25 @@ Minimum Sufficient Context**. **100% coverage** of `app.orchestra.context`.
 
 - [Context Builder](CONTEXT_BUILDER.md) · Source: `backend/app/orchestra/context/`.
 
+## Phase 3.5 — Prompt Builder ✅ (current)
+
+The **sixth Orchestra node** — assemble only, **no AI**. Transforms the
+`ContextPackage` into an immutable `PromptPackage`: a seven-layer `system_prompt`
+(Identity · Safety/Guardian · Current Page · Memories · Reflection Plan · Response
+Style · Output Formatting), a conversation blueprint, a versioned template
+(Reflection v1), a model role, and depth-scaled generation parameters. Required
+layers are validated (never silently omitted); templates are versioned. Added
+**Constitution Rule 14 — separation of structure, intelligence, and language**.
+**100% coverage** of `app.orchestra.prompt`.
+
+- [Prompt Builder](PROMPT_BUILDER.md) · Source: `backend/app/orchestra/prompt/`.
+
 ## Future roadmap
 
-- **Phase 3.5** — Prompt Builder (node 6), then Response Generator → … →
-  Final Responder, one node at a time on the Phase 2.75 architecture, Phase 2.5
-  rules, and the [Orchestra Constitution](ORCHESTRA_ENGINEERING_RULES.md).
+- **Phase 3.6** — Response Generator (node 7) — the **first node that calls the
+  model** (Ollama) — then Quality Checker → Memory Writer → Final Responder, on
+  the Phase 2.75 architecture, Phase 2.5 rules, and the
+  [Orchestra Constitution](ORCHESTRA_ENGINEERING_RULES.md).
 - **Phase 4** — Semantic memory (pgvector embeddings + recall).
 - **Phase 5** — Conversation threads on pages.
 - **Phase 6** — Emotional analytics, charts and timeline.
