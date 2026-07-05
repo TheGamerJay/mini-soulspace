@@ -294,6 +294,14 @@ blueprint, a versioned template (Reflection v1), a model role, and generation
 parameters. Assemble only, **no LLM call**, 100% coverage. See
 [Prompt Builder](docs/PROMPT_BUILDER.md).
 
+**Phase 3.6 — Mini Engine** builds the seventh node
+(`backend/app/orchestra/mini/`): the **first node that talks to a local model**.
+The Orchestra addresses **Mini Services** by name (Mini Core / Swift / Insight /
+Creator …); the Mini Engine maps role → service → model via `mini_services.json`
+and calls the runtime — Ollama is **sealed inside `runtime.py`**. Returns an
+immutable `CandidateResponse` with structured errors, retries, and metrics (no
+journal content logged), 100% coverage. See [Mini Engine](docs/MINI_ENGINE.md).
+
 ## 🗺️ Future Roadmap
 
 Auth → Diary storage → Reflection engine → Semantic memory → Analytics &

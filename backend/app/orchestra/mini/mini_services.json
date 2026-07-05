@@ -1,0 +1,26 @@
+{
+  "mini_core": {
+    "display_name": "Mini Core",
+    "purpose": "Primary Soul Companion conversations",
+    "runtime": "local",
+    "model": "qwen3:14b"
+  },
+  "mini_swift": {
+    "display_name": "Mini Swift",
+    "purpose": "Fast lightweight tasks",
+    "runtime": "local",
+    "model": "llama3.1:8b"
+  },
+  "mini_insight": {
+    "display_name": "Mini Insight",
+    "purpose": "Summaries, tagging, organization, memory analysis",
+    "runtime": "local",
+    "model": "gemma3:4b"
+  },
+  "mini_creator": {
+    "display_name": "Mini Creator",
+    "purpose": "Coding, writing, creative generation",
+    "runtime": "local",
+    "model": "qwen2.5-coder:14b"
+  }
+}

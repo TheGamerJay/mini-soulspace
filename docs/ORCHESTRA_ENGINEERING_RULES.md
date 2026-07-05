@@ -105,6 +105,20 @@ never sets policy. Each stays in its lane.
 
 > Added in Phase 3.5 (matches the brief's "Rule #14").
 
+## Rule 15 — Language Generation Makes No Decisions
+
+**Language generation must never make architectural decisions.**
+
+- The **Orchestra** provides intelligence.
+- The **Mini Engine** provides runtime access.
+- **Local models** provide language generation.
+
+The Orchestra addresses **Mini Services** by name; the runtime (and which model
+backs a service) is an internal detail of the Mini Engine that no other node may
+see or depend on.
+
+> Added in Phase 3.6 (matches the brief's "Rule #15").
+
 ---
 
 ## How these rules are applied today

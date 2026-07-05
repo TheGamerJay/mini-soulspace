@@ -138,11 +138,24 @@ layers are validated (never silently omitted); templates are versioned. Added
 
 - [Prompt Builder](PROMPT_BUILDER.md) · Source: `backend/app/orchestra/prompt/`.
 
+## Phase 3.6 — Mini Engine ✅ (current)
+
+The **seventh Orchestra node** — the **first node that talks to a local model**.
+The Orchestra addresses **Mini Services** by name (Mini Core / Swift / Insight /
+Creator, …); the Mini Engine maps role → service → local model via
+`mini_services.json` and calls the runtime. The runtime (Ollama) is **sealed
+inside `runtime.py`** — no other node references it. Consumes the `PromptPackage`,
+returns an immutable `CandidateResponse` with structured errors, configurable
+timeout/retries, and metrics (no journal content logged). Added **Constitution
+Rule 15 — language generation makes no architectural decisions**. **100%
+coverage** of `app.orchestra.mini`.
+
+- [Mini Engine](MINI_ENGINE.md) · Source: `backend/app/orchestra/mini/`.
+
 ## Future roadmap
 
-- **Phase 3.6** — Response Generator (node 7) — the **first node that calls the
-  model** (Ollama) — then Quality Checker → Memory Writer → Final Responder, on
-  the Phase 2.75 architecture, Phase 2.5 rules, and the
+- **Phase 3.7** — Quality Checker (node 8), then Memory Writer → Final Responder,
+  on the Phase 2.75 architecture, Phase 2.5 rules, and the
   [Orchestra Constitution](ORCHESTRA_ENGINEERING_RULES.md).
 - **Phase 4** — Semantic memory (pgvector embeddings + recall).
 - **Phase 5** — Conversation threads on pages.

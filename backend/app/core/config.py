@@ -25,7 +25,7 @@ class Settings(BaseSettings):
 
     # --- Application metadata ------------------------------------------------
     APP_NAME: str = "Mini SoulSpace"
-    APP_PHASE: str = "3.5"
+    APP_PHASE: str = "3.6"
     ENVIRONMENT: str = "development"
     DEBUG: bool = True
     API_PREFIX: str = "/api"
@@ -40,6 +40,10 @@ class Settings(BaseSettings):
     FAST_MODEL: str = "llama3.1:8b"
     TAG_MODEL: str = "gemma3:4b"
     CODER_MODEL: str = "qwen2.5-coder:14b"
+
+    # --- Mini Engine (local runtime access) ----------------------------------
+    MINI_TIMEOUT_SECONDS: float = 60.0
+    MINI_RETRIES: int = 1
 
     # --- Security / CORS -----------------------------------------------------
     SECRET_KEY: str = "change-me-in-production"

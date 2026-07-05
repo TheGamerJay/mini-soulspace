@@ -200,8 +200,13 @@ Memory Writer → Final Responder     (Safety may short-circuit to a safe respon
   an immutable `PromptPackage`: a seven-layer system prompt, conversation
   blueprint, versioned template (Reflection v1), model role, and generation
   parameters. Assemble only, no LLM call. See [Prompt Builder](PROMPT_BUILDER.md).
+- **Node 7 — Mini Engine (Phase 3.6)** — the **first node that calls a local
+  model**. The Orchestra addresses **Mini Services** by name; the Mini Engine maps
+  role → service → model (`mini_services.json`) and calls the runtime — Ollama is
+  sealed inside `runtime.py`. Returns an immutable `CandidateResponse` with
+  structured errors, retries, and metrics. See [Mini Engine](MINI_ENGINE.md).
 
-The remaining nodes (7–10) are still architecture.
+The remaining nodes (8–10) are still architecture.
 
 Every node must obey the permanent
 [Orchestra Engineering Rules](ORCHESTRA_ENGINEERING_RULES.md) — the engineering
