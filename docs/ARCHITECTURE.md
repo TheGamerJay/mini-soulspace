@@ -187,8 +187,12 @@ Memory Writer → Final Responder     (Safety may short-circuit to a safe respon
   Guardian, then retrieves the minimum set of relevant, user-scoped memories from
   the `soul_memories` store into an immutable `RetrievalResult`. Retrieve only,
   no AI, no fabrication. See [Memory Retriever](MEMORY_RETRIEVER.md).
+- **Node 4 — Reflection Planner (Phase 3.3)** — "the director": decides *what
+  kind* of reflection should happen (type, tone, depth, questions, memory
+  referencing, celebration, listening) as an immutable `ReflectionPlan`. Honors
+  Guardian caps; plan only, no AI. See [Reflection Planner](REFLECTION_PLANNER.md).
 
-The remaining nodes (4–10) are still architecture.
+The remaining nodes (5–10) are still architecture.
 
 Every node must obey the permanent
 [Orchestra Engineering Rules](ORCHESTRA_ENGINEERING_RULES.md) — the engineering

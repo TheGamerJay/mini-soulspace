@@ -272,6 +272,13 @@ and retrieves the minimum set of relevant, user-scoped memories (from the new
 then relevance — retrieve only, **no AI**, no fabrication, 100% coverage. See
 [Memory Retriever](docs/MEMORY_RETRIEVER.md).
 
+**Phase 3.3 — Reflection Planner** builds the fourth node
+(`backend/app/orchestra/planner/`): "the director". It decides *what kind* of
+reflection should happen — type, tone, depth, question plan, memory referencing,
+celebration, listening — as an immutable `ReflectionPlan`, honoring Guardian caps
+(blocked ⇒ No Reflection). Plan only, **no AI, no LLM**, 100% coverage. See
+[Reflection Planner](docs/REFLECTION_PLANNER.md).
+
 ## 🗺️ Future Roadmap
 
 Auth → Diary storage → Reflection engine → Semantic memory → Analytics &

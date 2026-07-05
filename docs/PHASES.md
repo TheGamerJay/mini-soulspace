@@ -100,9 +100,21 @@ never fabricates. **100% coverage** of `app.orchestra.memory`.
 
 - [Memory Retriever](MEMORY_RETRIEVER.md) · Source: `backend/app/orchestra/memory/`.
 
+## Phase 3.3 — Reflection Planner ✅ (current)
+
+The **fourth Orchestra node** ("the director") — plan only, **no AI, no LLM, no
+memory I/O**. Consumes the `OrchestraRequest` + `GuardianResult` +
+`RetrievalResult` and emits an immutable `PlannerResult`/`ReflectionPlan`:
+reflection type, tone, depth, question plan, memory-referencing, celebration and
+listening decisions. Honors the Guardian (may reduce, never exceeds depth/question
+limits; blocked ⇒ `NO_REFLECTION`); simplest-safe plan when uncertain. Reuses the
+Guardian's `ReflectionDepth`. **100% coverage** of `app.orchestra.planner`.
+
+- [Reflection Planner](REFLECTION_PLANNER.md) · Source: `backend/app/orchestra/planner/`.
+
 ## Future roadmap
 
-- **Phase 3.3** — Reflection Planner (node 4), then Context Builder → … →
+- **Phase 3.4** — Context Builder (node 5), then Prompt Builder → … →
   Final Responder, one node at a time on the Phase 2.75 architecture, Phase 2.5
   rules, and the [Orchestra Constitution](ORCHESTRA_ENGINEERING_RULES.md).
 - **Phase 4** — Semantic memory (pgvector embeddings + recall).
