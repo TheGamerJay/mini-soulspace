@@ -330,6 +330,17 @@ preferences/projects **evolve in place**, and relationships are **linked** via
 importance. Deterministic, **no AI**, 100% coverage. See
 [Memory Writer](docs/MEMORY_WRITER.md).
 
+**Phase 3.8.5 — Memory Intelligence Engine** adds a memory-**quality** layer
+(`backend/app/orchestra/intelligence/`): evidence-backed confidence (signup 1.0 →
+explicit 0.99 → implied 0.80 → casual 0.40), configurable thresholds
+(`memory_intelligence.json`, per-type overrides), sources, mandatory evidence,
+version history that is never lost, evolution/conflict resolution, confidence
+decay (never deletes), verification prep, and **user-correction learning** —
+corrections permanently replace outdated values, raise confidence, and never
+resurface; frequently corrected types require stronger evidence. Deterministic,
+**no AI**, 100% coverage. See
+[Memory Intelligence Engine](docs/MEMORY_INTELLIGENCE_ENGINE.md).
+
 ## 🗺️ Future Roadmap
 
 Auth → Diary storage → Reflection engine → Semantic memory → Analytics &

@@ -193,6 +193,22 @@ importance (Low→Critical). Added **Constitution Rule 18 — memory is earned**
 
 - [Memory Writer](MEMORY_WRITER.md) · Source: `backend/app/orchestra/writer/`.
 
+## Phase 3.8.5 — Memory Intelligence Engine ✅ (current)
+
+A **memory-quality layer** (not a new decision-maker): keeps every stored memory
+accurate, trustworthy, explainable, verifiable, and able to evolve. Deterministic,
+**no AI**. Evidence-backed confidence tiers (signup 1.0 → explicit 0.99 → implied
+0.80 → casual 0.40); configurable thresholds in `memory_intelligence.json` (with
+per-type overrides, nothing hardcoded); sources; mandatory evidence; **version
+history that is never lost** (`soul_memory_versions`, migration 0004); evolution/
+conflict resolution (update + archive outdated); confidence decay (never deletes);
+verification prep; **user-correction learning** (corrections permanently replace,
+raise confidence, never resurface) and **correction-pattern learning** (frequently
+corrected types require stronger evidence). Added **Constitution Rule 19 — every
+memory must be explainable**. **100% coverage** of `app.orchestra.intelligence`.
+
+- [Memory Intelligence Engine](MEMORY_INTELLIGENCE_ENGINE.md) · Source: `backend/app/orchestra/intelligence/`.
+
 ## Future roadmap
 
 - **Phase 3.9** — Final Responder (node 10), completing the Orchestra, on the

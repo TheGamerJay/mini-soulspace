@@ -220,6 +220,12 @@ Memory Writer → Final Responder     (Safety may short-circuit to a safe respon
   the Retriever reads). "When in doubt, don't save"; dedup + preference/project
   evolution (update-in-place) + relationship linking. Immutable `MemoryDecision`,
   no AI. See [Memory Writer](MEMORY_WRITER.md).
+- **Memory Intelligence Engine (Phase 3.8.5)** — a quality layer beside node 9:
+  evidence-backed confidence, configurable thresholds, sources, version history
+  that is never lost, evolution/conflict resolution, confidence decay,
+  verification prep, and user-correction learning (corrections permanently
+  replace and never resurface). No AI. See
+  [Memory Intelligence Engine](MEMORY_INTELLIGENCE_ENGINE.md).
 
 Only the **Final Responder (node 10)** remains.
 

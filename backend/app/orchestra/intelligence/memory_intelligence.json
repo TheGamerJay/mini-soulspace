@@ -1,0 +1,12 @@
+{
+  "auto_store_threshold": 0.90,
+  "needs_verification_threshold": 0.70,
+  "low_confidence_threshold": 0.50,
+  "minimum_confidence": 0.00,
+  "confidence_decay_enabled": true,
+  "verification_enabled": true,
+  "decay_per_day": 0.0005,
+  "correction_pattern_threshold": 2,
+  "correction_confidence_penalty": 0.05,
+  "type_overrides": {}
+}

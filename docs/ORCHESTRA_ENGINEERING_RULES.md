@@ -154,6 +154,23 @@ by the conversation are stored, and evolving facts update rather than clutter.
 
 > Added in Phase 3.8 (matches the brief's "Rule #18").
 
+## Rule 19 — Every Memory Must Be Explainable
+
+Every stored memory must include:
+
+- **Confidence**
+- **Evidence**
+- **Source**
+- **Provenance** (created / updated / verified / version / author)
+
+**If Mini cannot explain why a memory exists, that memory should not exist.**
+
+The **user is the final authority** over every memory. User corrections
+permanently replace outdated information and prevent the same incorrect memory
+from repeatedly resurfacing.
+
+> Added in Phase 3.8.5 (matches the brief's "Rule #19").
+
 ---
 
 ## How these rules are applied today
