@@ -19,6 +19,7 @@ from app.orchestra.guardian.schemas import (
     ReflectionDepth,
     RecommendedAction,
 )
+from app.orchestra.meaning.schemas import MeaningIntentResult, RealWorldIntent
 from app.orchestra.schemas import OrchestraRequest
 
 C = GuardianCategory
@@ -28,6 +29,8 @@ A = RecommendedAction
 
 _CRISIS = {C.SELF_HARM_RISK, C.HARM_TO_OTHERS, C.EMERGENCY}
 _DEPTH_ORDER = [D.NONE, D.LIGHT, D.MEDIUM, D.DEEP]
+# Crisis lexicon signals discounted when meaning proves no real-world intent.
+_CRISIS_SIGNALS = {"self_harm", "harm_others", "emergency", "strong_distress"}
 _OVERRIDE_SIGNALS = {"identity_override", "roleplay_override", "safety_override"}
 
 
@@ -122,8 +125,17 @@ def _cap_depth(depth: ReflectionDepth, cap: ReflectionDepth) -> ReflectionDepth:
     return depth if _DEPTH_ORDER.index(depth) <= _DEPTH_ORDER.index(cap) else cap
 
 
-def evaluate(request: OrchestraRequest) -> GuardianResult:
-    """Classify and protect. Returns an immutable GuardianResult."""
+def evaluate(
+    request: OrchestraRequest, meaning: MeaningIntentResult | None = None
+) -> GuardianResult:
+    """Classify and protect. Returns an immutable GuardianResult.
+
+    When a ``MeaningIntentResult`` is supplied and it proves the content has no
+    real-world intent (``real_world_intent == false`` — e.g. song lyrics,
+    fiction, a quote, historical/awareness discussion), a crisis classification
+    triggered by isolated words is downgraded. Ambiguous cases (``unclear``) stay
+    protected (safety first). With ``meaning=None`` behaviour is unchanged.
+    """
 
     if not isinstance(request, OrchestraRequest):
         raise GuardianError(
@@ -133,7 +145,19 @@ def evaluate(request: OrchestraRequest) -> GuardianResult:
     text = request.page_content or ""
     signals = detect_signals(text)
     category = classify_category(signals)
-    tone = classify_tone(signals, text)
+
+    downgraded = False
+    tone_signals = signals
+    if (
+        category in _CRISIS
+        and meaning is not None
+        and meaning.real_world_intent == RealWorldIntent.FALSE
+    ):
+        tone_signals = signals - _CRISIS_SIGNALS
+        category = classify_category(tone_signals)
+        downgraded = True
+
+    tone = classify_tone(tone_signals, text)
     p = dict(_POLICY[category])  # copy base policy
     crisis = p["crisis"]
 
@@ -161,6 +185,13 @@ def evaluate(request: OrchestraRequest) -> GuardianResult:
         p["depth"] = _cap_depth(p["depth"], D.LIGHT)
 
     reason = f"category={category.value}; tone={tone.value}; signals={sorted(signals)}"
+    if meaning is not None:
+        reason += (
+            f"; meaning={meaning.meaning_type.value}/{meaning.context_type.value}"
+            f"/{meaning.real_world_intent.value}"
+        )
+        if downgraded:
+            reason += "; downgraded_by_meaning"
 
     return GuardianResult(
         request_id=request.request_id,

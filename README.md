@@ -294,6 +294,14 @@ blueprint, a versioned template (Reflection v1), a model role, and generation
 parameters. Assemble only, **no LLM call**, 100% coverage. See
 [Prompt Builder](docs/PROMPT_BUILDER.md).
 
+**Phase 3.65 — Meaning & Intent Engine** adds a **pre-Guardian analyzer**
+(`backend/app/orchestra/meaning/`): Input → Meaning Analysis → Guardian. It
+determines meaning / context / intent / real-world intent so safety is never
+based on isolated words — a song "Kill Yourself" or a novel murder is downgraded,
+a literal journal self-disclosure still activates the crisis path; ambiguity
+stays protected. The Guardian is now meaning-aware (backwards compatible). No AI,
+100% coverage. See [Meaning & Intent Engine](docs/MEANING_INTENT_ENGINE.md).
+
 **Phase 3.6 — Mini Engine** builds the seventh node
 (`backend/app/orchestra/mini/`): the **first node that talks to a local model**.
 The Orchestra addresses **Mini Services** by name (Mini Core / Swift / Insight /

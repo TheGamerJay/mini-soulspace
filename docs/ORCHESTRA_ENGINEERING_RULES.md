@@ -119,6 +119,19 @@ see or depend on.
 
 > Added in Phase 3.6 (matches the brief's "Rule #15").
 
+## Rule 16 — Understand Meaning Before Judging
+
+**The Orchestra must understand meaning before making safety decisions.**
+
+> Meaning precedes context. Context precedes intent. Intent precedes
+> classification. Classification precedes response.
+
+The Orchestra must **never** classify users based solely on isolated words,
+titles, or phrases. Ambiguity is reported honestly (`unclear`) and treated with
+caution — never resolved by guessing.
+
+> Added in Phase 3.65 (matches the brief's "Rule #16").
+
 ---
 
 ## How these rules are applied today

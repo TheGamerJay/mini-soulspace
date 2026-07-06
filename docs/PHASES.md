@@ -152,6 +152,19 @@ coverage** of `app.orchestra.mini`.
 
 - [Mini Engine](MINI_ENGINE.md) · Source: `backend/app/orchestra/mini/`.
 
+## Phase 3.65 — Meaning & Intent Engine ✅ (current)
+
+A **pre-Guardian analyzer** — new flow: Input → **Meaning Analysis** → Guardian →
+Planner. Deterministic, **no AI**. Determines meaning / context / intent /
+real-world intent (immutable `MeaningIntentResult`) so safety is never based on
+isolated words. The Guardian's `evaluate(request, meaning=None)` is backwards
+compatible: `real_world_intent == false` (lyrics, fiction, quotes, awareness)
+**downgrades** a keyword-only crisis; `true` keeps it; `unclear` stays protected.
+Added **Constitution Rule 16 — understand meaning before judging**. **100%
+coverage** of `app.orchestra.meaning` and the updated `app.orchestra.guardian`.
+
+- [Meaning & Intent Engine](MEANING_INTENT_ENGINE.md) · Source: `backend/app/orchestra/meaning/`.
+
 ## Future roadmap
 
 - **Phase 3.7** — Quality Checker (node 8), then Memory Writer → Final Responder,

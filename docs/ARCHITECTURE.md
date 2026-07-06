@@ -179,9 +179,14 @@ Memory Writer → Final Responder     (Safety may short-circuit to a safe respon
 **Nodes 1–2 are implemented; no AI yet.**
 - **Node 1 — Input Receiver (Phase 3.0)** — packages application state into an
   immutable, versioned `OrchestraRequest`. See [Input Receiver](INPUT_RECEIVER.md).
-- **Node 2 — Guardian Engine (Phase 3.1)** — the protector: classifies the
-  request and returns an immutable `GuardianResult` (category, tone, and
-  structured reflection/memory/identity/safety decisions). Deterministic,
+- **Pre-Guardian — Meaning & Intent Engine (Phase 3.65)** — runs before node 2:
+  determines meaning / context / intent / real-world intent so the Guardian never
+  escalates on isolated words. `false` real-world intent (lyrics, fiction, quotes,
+  awareness) downgrades a keyword-only crisis; `unclear` stays protected. No AI.
+  See [Meaning & Intent Engine](MEANING_INTENT_ENGINE.md).
+- **Node 2 — Guardian Engine (Phase 3.1, meaning-aware in 3.65)** — the protector:
+  classifies the request and returns an immutable `GuardianResult` (category, tone,
+  and structured reflection/memory/identity/safety decisions). Deterministic,
   rule-based, safety-first. See [Guardian Engine](GUARDIAN_ENGINE.md).
 - **Node 3 — Memory Retriever (Phase 3.2)** — "the Memory Librarian": honors the
   Guardian, then retrieves the minimum set of relevant, user-scoped memories from
