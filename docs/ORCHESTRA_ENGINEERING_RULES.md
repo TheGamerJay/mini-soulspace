@@ -142,6 +142,18 @@ caution — never resolved by guessing.
 
 > Added in Phase 3.7 (matches the brief's "Rule #17").
 
+## Rule 18 — Memory Is Earned
+
+**Mini remembers only information that provides long-term value.**
+
+- When uncertain, Mini chooses **not** to remember.
+- Quality of memory is more important than quantity.
+
+Nothing is fabricated, inferred, exaggerated, or duplicated; only facts supported
+by the conversation are stored, and evolving facts update rather than clutter.
+
+> Added in Phase 3.8 (matches the brief's "Rule #18").
+
 ---
 
 ## How these rules are applied today

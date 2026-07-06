@@ -26,6 +26,20 @@ class MemoryType(str, enum.Enum):
     DIARY_ENTRY = "diary_entry"
     WRITING_HISTORY = "writing_history"
     MILESTONE = "milestone"
+    # Extended in Phase 3.8 (Memory Writer). Additive — the Retriever accepts them.
+    ANNIVERSARY = "anniversary"
+    SKILL = "skill"
+    HABIT = "habit"
+    ROUTINE = "routine"
+    FAVORITE = "favorite"
+    REMINDER_PREFERENCE = "reminder_preference"
+    CREATIVE_PROJECT = "creative_project"
+    LEARNING_PROGRESS = "learning_progress"
+    HEALTH_PREFERENCE = "health_preference"
+    TRAVEL = "travel"
+    PET = "pet"
+    QUOTE = "quote"
+    CUSTOM = "custom"
 
 
 class MemoryPriority(str, enum.Enum):

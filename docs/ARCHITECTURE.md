@@ -215,8 +215,13 @@ Memory Writer → Final Responder     (Safety may short-circuit to a safe respon
   an immutable `QualityResult` (approved / rejected / needs_retry) with structured
   violations. Honors `MeaningIntentResult`; deterministic, no AI, no delivery.
   See [Quality Checker](QUALITY_CHECKER.md).
+- **Node 9 — Memory Writer (Phase 3.8)** — decides what (if anything) an approved
+  exchange should remember and optionally persists it to `soul_memories` (the store
+  the Retriever reads). "When in doubt, don't save"; dedup + preference/project
+  evolution (update-in-place) + relationship linking. Immutable `MemoryDecision`,
+  no AI. See [Memory Writer](MEMORY_WRITER.md).
 
-The remaining nodes (9–10) are still architecture.
+Only the **Final Responder (node 10)** remains.
 
 Every node must obey the permanent
 [Orchestra Engineering Rules](ORCHESTRA_ENGINEERING_RULES.md) — the engineering

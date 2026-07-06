@@ -320,6 +320,16 @@ while honoring the meaning engine so creative content isn't over-escalated.
 Deterministic, **no AI, no delivery**, 100% coverage. See
 [Quality Checker](docs/QUALITY_CHECKER.md).
 
+**Phase 3.8 — Memory Writer** builds the ninth node
+(`backend/app/orchestra/writer/`). It decides what — if anything — an **approved**
+exchange should become a long-term memory ("when in doubt, don't save"), and
+optionally persists it to the `soul_memories` store the Retriever reads. Facts
+come only from the user's own writing (never fabricated); duplicates are skipped,
+preferences/projects **evolve in place**, and relationships are **linked** via
+`related_to_id` (graph-ready). Immutable `MemoryDecision` with Low→Critical
+importance. Deterministic, **no AI**, 100% coverage. See
+[Memory Writer](docs/MEMORY_WRITER.md).
+
 ## 🗺️ Future Roadmap
 
 Auth → Diary storage → Reflection engine → Semantic memory → Analytics &

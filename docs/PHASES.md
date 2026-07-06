@@ -179,9 +179,23 @@ unverified**. **100% coverage** of `app.orchestra.quality`.
 
 - [Quality Checker](QUALITY_CHECKER.md) · Source: `backend/app/orchestra/quality/`.
 
+## Phase 3.8 — Memory Writer ✅ (current)
+
+The **ninth Orchestra node** — decides what (if anything) an **approved** exchange
+should become a long-term memory, and optionally persists it to `soul_memories`.
+Deterministic, **no AI**, no reflection/delivery. Default: *when in doubt, don't
+save*. Only APPROVED (and Guardian-permitted) exchanges qualify; facts are
+extracted from the user's own writing (never fabricated). Duplicate detection +
+**preference/project evolution** (update-in-place) + **relationship evolution**
+(create-linked via `related_to_id`, graph-ready). Immutable `MemoryDecision` with
+importance (Low→Critical). Added **Constitution Rule 18 — memory is earned**.
+**100% coverage** of `app.orchestra.writer`.
+
+- [Memory Writer](MEMORY_WRITER.md) · Source: `backend/app/orchestra/writer/`.
+
 ## Future roadmap
 
-- **Phase 3.8** — Memory Writer (node 9), then Final Responder (node 10), on the
+- **Phase 3.9** — Final Responder (node 10), completing the Orchestra, on the
   Phase 2.75 architecture, Phase 2.5 rules, and the
   [Orchestra Constitution](ORCHESTRA_ENGINEERING_RULES.md).
 - **Phase 4** — Semantic memory (pgvector embeddings + recall).
