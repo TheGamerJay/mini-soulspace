@@ -165,10 +165,24 @@ coverage** of `app.orchestra.meaning` and the updated `app.orchestra.guardian`.
 
 - [Meaning & Intent Engine](MEANING_INTENT_ENGINE.md) · Source: `backend/app/orchestra/meaning/`.
 
+## Phase 3.7 — Quality Checker ✅ (current)
+
+The **eighth Orchestra node** — the gate before the user. Reviews the Mini
+Engine's `CandidateResponse` and returns an immutable `QualityResult`
+(approved / rejected / needs_retry) with structured `Violation`s. Deterministic,
+**no AI, no model calls, no delivery, no rewriting**. Checks identity/sentience,
+hidden-prompt/knowledge protection, raw model-name leaks, fabricated memory,
+unsafe advice, crisis handling, manipulation, generic/robotic phrasing, question/
+tone/depth compliance — and **honors `MeaningIntentResult`** so creative content
+isn't over-escalated. Added **Constitution Rule 17 — nothing reaches the user
+unverified**. **100% coverage** of `app.orchestra.quality`.
+
+- [Quality Checker](QUALITY_CHECKER.md) · Source: `backend/app/orchestra/quality/`.
+
 ## Future roadmap
 
-- **Phase 3.7** — Quality Checker (node 8), then Memory Writer → Final Responder,
-  on the Phase 2.75 architecture, Phase 2.5 rules, and the
+- **Phase 3.8** — Memory Writer (node 9), then Final Responder (node 10), on the
+  Phase 2.75 architecture, Phase 2.5 rules, and the
   [Orchestra Constitution](ORCHESTRA_ENGINEERING_RULES.md).
 - **Phase 4** — Semantic memory (pgvector embeddings + recall).
 - **Phase 5** — Conversation threads on pages.

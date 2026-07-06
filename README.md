@@ -310,6 +310,16 @@ and calls the runtime — Ollama is **sealed inside `runtime.py`**. Returns an
 immutable `CandidateResponse` with structured errors, retries, and metrics (no
 journal content logged), 100% coverage. See [Mini Engine](docs/MINI_ENGINE.md).
 
+**Phase 3.7 — Quality Checker** builds the eighth node
+(`backend/app/orchestra/quality/`): the gate before the user. It reviews the
+`CandidateResponse` against safety/identity/quality/SoulDiary rules and returns
+an immutable `QualityResult` (approved / rejected / needs_retry) with structured
+violations — catching sentience claims, hidden-prompt leaks, raw model names,
+fabricated memory, unsafe advice, manipulation, and generic/robotic phrasing,
+while honoring the meaning engine so creative content isn't over-escalated.
+Deterministic, **no AI, no delivery**, 100% coverage. See
+[Quality Checker](docs/QUALITY_CHECKER.md).
+
 ## 🗺️ Future Roadmap
 
 Auth → Diary storage → Reflection engine → Semantic memory → Analytics &

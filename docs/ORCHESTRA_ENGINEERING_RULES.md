@@ -132,6 +132,16 @@ caution — never resolved by guessing.
 
 > Added in Phase 3.65 (matches the brief's "Rule #16").
 
+## Rule 17 — Nothing Reaches the User Unverified
+
+**No response reaches the user until it passes quality verification.**
+
+- The **Mini Engine** generates candidates.
+- The **Quality Checker** decides whether they are safe and aligned.
+- The **Final Responder** delivers only approved responses.
+
+> Added in Phase 3.7 (matches the brief's "Rule #17").
+
 ---
 
 ## How these rules are applied today

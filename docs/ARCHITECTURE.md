@@ -210,8 +210,13 @@ Memory Writer → Final Responder     (Safety may short-circuit to a safe respon
   role → service → model (`mini_services.json`) and calls the runtime — Ollama is
   sealed inside `runtime.py`. Returns an immutable `CandidateResponse` with
   structured errors, retries, and metrics. See [Mini Engine](MINI_ENGINE.md).
+- **Node 8 — Quality Checker (Phase 3.7)** — the gate before the user: reviews the
+  `CandidateResponse` against safety/identity/quality/SoulDiary rules and returns
+  an immutable `QualityResult` (approved / rejected / needs_retry) with structured
+  violations. Honors `MeaningIntentResult`; deterministic, no AI, no delivery.
+  See [Quality Checker](QUALITY_CHECKER.md).
 
-The remaining nodes (8–10) are still architecture.
+The remaining nodes (9–10) are still architecture.
 
 Every node must obey the permanent
 [Orchestra Engineering Rules](ORCHESTRA_ENGINEERING_RULES.md) — the engineering
