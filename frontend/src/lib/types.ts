@@ -89,6 +89,40 @@ export interface SearchResults {
   pages: SoulPage[];
 }
 
+// ── The Orchestra (Phase 4.0) ────────────────────────────────────────────────
+export interface MemoryUpdate {
+  op: string;
+  memory_type: string | null;
+  importance: string | null;
+  title: string | null;
+}
+
+export interface Reflection {
+  trace_id: string;
+  delivered: boolean;
+  status: string;
+  text: string;
+  memory_updates: MemoryUpdate[];
+  events: string[];
+  failure_reason: string | null;
+  total_ms: number;
+}
+
+export interface Bookmark {
+  book_id: string;
+  chapter_id: string;
+  page_id: string;
+  cursor: number | null;
+  book_title: string;
+  chapter_title: string;
+  page_title: string;
+}
+
+export interface ClosePageResponse {
+  reflection: Reflection;
+  bookmark: Bookmark;
+}
+
 export type SortOption =
   | "recently_opened"
   | "recently_updated"

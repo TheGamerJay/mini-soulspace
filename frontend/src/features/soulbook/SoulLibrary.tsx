@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { ApiError, soulApi } from "@/lib/api";
-import type { SoulBook, SortOption } from "@/lib/types";
+import type { Bookmark, SoulBook, SortOption } from "@/lib/types";
 
 const SORTS: { value: SortOption; label: string }[] = [
   { value: "recently_opened", label: "Recently Opened" },
@@ -35,6 +35,15 @@ export function SoulLibrary() {
   const [newTitle, setNewTitle] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [bookmark, setBookmark] = useState<Bookmark | null>(null);
+
+  // The ribbon bookmark: where the SoulDiary was last closed.
+  useEffect(() => {
+    soulApi
+      .getBookmark()
+      .then(setBookmark)
+      .catch(() => setBookmark(null));
+  }, []);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -98,6 +107,31 @@ export function SoulLibrary() {
         </h1>
         <p className="mt-2 text-soul-muted">Your SoulBooks — every story you keep.</p>
       </motion.header>
+
+      {/* Reopen to the bookmarked page */}
+      {bookmark && (
+        <motion.button
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          onClick={() =>
+            router.push(
+              `/soulbooks/${bookmark.book_id}/chapters/${bookmark.chapter_id}/pages/${bookmark.page_id}`,
+            )
+          }
+          className="mb-6 flex w-full items-center gap-4 rounded-2xl border border-soul-primary/30 bg-soul-surface/70 p-4 text-left shadow-lg transition-colors hover:border-soul-primary"
+        >
+          <span className="h-10 w-2.5 shrink-0 rounded-b-md bg-gradient-to-b from-soul-primary to-soul-accent" aria-hidden />
+          <span>
+            <span className="block text-sm font-semibold text-soul-accent">
+              Continue your story — {bookmark.book_title}
+            </span>
+            <span className="block text-xs text-soul-muted">
+              {bookmark.chapter_title} · {bookmark.page_title} · your ribbon is keeping the page
+            </span>
+          </span>
+        </motion.button>
+      )}
 
       {/* Create */}
       <div className="mb-6 flex flex-wrap items-center gap-3">
@@ -178,8 +212,14 @@ export function SoulLibrary() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.96 }}
               whileHover={{ y: -4 }}
-              className="flex flex-col justify-between rounded-2xl border border-soul-primary/20 bg-soul-surface p-5 shadow-lg"
+              className="relative flex flex-col justify-between overflow-hidden rounded-2xl border border-soul-primary/20 bg-soul-surface p-5 shadow-lg"
             >
+              {bookmark?.book_id === book.id && (
+                <span
+                  aria-label="Ribbon bookmark"
+                  className="absolute right-5 top-0 h-9 w-2.5 rounded-b-md bg-gradient-to-b from-soul-primary to-soul-accent shadow"
+                />
+              )}
               <button onClick={() => router.push(`/soulbooks/${book.id}`)} className="text-left">
                 <h3 className="text-xl font-semibold text-soul-accent">{book.title}</h3>
                 <p className="mt-1 text-sm text-soul-muted">

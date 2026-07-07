@@ -10,6 +10,15 @@ from sqlalchemy.orm import Session
 from app.auth.dependencies import get_current_active_user
 from app.db.session import get_db
 from app.models.user import User
+from app.orchestra.pipeline import OrchestraOutcome, load_orchestra_config, run_orchestra
+from app.schemas.orchestra import (
+    BookmarkOut,
+    ClosePageRequest,
+    ClosePageResponse,
+    MemoryUpdateOut,
+    NodeMetricOut,
+    ReflectionOut,
+)
 from app.schemas.soulbook import (
     SearchResults,
     SoulBookCreate,
@@ -57,6 +66,29 @@ def search(q: str = Query("", max_length=200), user: User = CurrentUser, db: Ses
     return SearchResults(
         books=[SoulBookRead.model_validate(b) for b in books],
         pages=[SoulPageRead.model_validate(p) for p in pages],
+    )
+
+
+@router.get(
+    "/bookmark",
+    response_model=BookmarkOut | None,
+    summary="Ribbon bookmark (where the SoulDiary was last closed)",
+)
+def get_bookmark(user: User = CurrentUser, db: Session = Db):
+    bookmark = svc.get_bookmark(db, user.id)
+    if bookmark is None:
+        return None
+    book = svc.get_book(db, user.id, bookmark.book_id)
+    chapter = svc.get_chapter(db, user.id, bookmark.book_id, bookmark.chapter_id)
+    page = svc.get_page(db, user.id, bookmark.book_id, bookmark.chapter_id, bookmark.page_id)
+    return BookmarkOut(
+        book_id=bookmark.book_id,
+        chapter_id=bookmark.chapter_id,
+        page_id=bookmark.page_id,
+        cursor=int(bookmark.label) if bookmark.label and bookmark.label.isdigit() else None,
+        book_title=book.title,
+        chapter_title=chapter.title,
+        page_title=page.title,
     )
 
 
@@ -244,3 +276,85 @@ def delete_page(
 ):
     svc.soft_delete_page(db, user.id, book_id, chapter_id, page_id)
     db.commit()
+
+
+# ── The Orchestra (Phase 4.0) ────────────────────────────────────────────────
+def _reflection_out(outcome: OrchestraOutcome) -> ReflectionOut:
+    pkg = outcome.package
+    debug = load_orchestra_config().debug_mode
+    return ReflectionOut(
+        trace_id=outcome.trace_id,
+        delivered=outcome.delivered,
+        status=pkg.status.value,
+        text=pkg.text,
+        memory_updates=[
+            MemoryUpdateOut(op=m.op, memory_type=m.memory_type, importance=m.importance, title=m.title)
+            for m in pkg.memory_updates
+        ],
+        events=[e.name for e in pkg.frontend_events],
+        failure_reason=pkg.metadata.get("failure_reason"),
+        total_ms=outcome.total_ms,
+        # Developers only — users never see debug information.
+        metrics=[NodeMetricOut(**m.model_dump()) for m in outcome.metrics] if debug else None,
+        slowest_node=outcome.slowest_node if debug else None,
+    )
+
+
+@router.post(
+    "/{book_id}/chapters/{chapter_id}/pages/{page_id}/reflect",
+    response_model=ReflectionOut,
+    summary="Run the Orchestra: the SoulDiary talks back",
+)
+def reflect_on_page(
+    book_id: uuid.UUID,
+    chapter_id: uuid.UUID,
+    page_id: uuid.UUID,
+    user: User = CurrentUser,
+    db: Session = Db,
+):
+    outcome = run_orchestra(db, user, book_id, chapter_id, page_id)
+    db.commit()  # persist memory writes; the page itself was already saved
+    return _reflection_out(outcome)
+
+
+@router.post(
+    "/{book_id}/chapters/{chapter_id}/pages/{page_id}/close",
+    response_model=ClosePageResponse,
+    summary="Close SoulDiary: save, reflect, bookmark",
+)
+def close_book(
+    book_id: uuid.UUID,
+    chapter_id: uuid.UUID,
+    page_id: uuid.UUID,
+    payload: ClosePageRequest,
+    user: User = CurrentUser,
+    db: Session = Db,
+):
+    # 1. Saving the diary page always has priority — commit before the Orchestra.
+    if payload.title is not None or payload.content is not None:
+        svc.autosave_page(
+            db, user.id, book_id, chapter_id, page_id,
+            title=payload.title, content=payload.content,
+        )
+    bookmark = svc.set_bookmark(db, user.id, book_id, chapter_id, page_id, cursor=payload.cursor)
+    book = svc.get_book(db, user.id, book_id, touch=True)
+    chapter = svc.get_chapter(db, user.id, book_id, chapter_id, touch=True)
+    page = svc.get_page(db, user.id, book_id, chapter_id, page_id)
+    db.commit()
+
+    # 2. The Orchestra executes (failure here can never lose the saved page).
+    outcome = run_orchestra(db, user, book_id, chapter_id, page_id)
+    db.commit()
+
+    return ClosePageResponse(
+        reflection=_reflection_out(outcome),
+        bookmark=BookmarkOut(
+            book_id=book_id,
+            chapter_id=chapter_id,
+            page_id=page_id,
+            cursor=payload.cursor,
+            book_title=book.title,
+            chapter_title=chapter.title,
+            page_title=page.title,
+        ),
+    )

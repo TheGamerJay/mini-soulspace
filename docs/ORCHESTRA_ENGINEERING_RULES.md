@@ -183,6 +183,15 @@ frontend.**
 
 > Added in Phase 3.9 (matches the brief's "Rule #20").
 
+## Rule 21 — One Complete Pipeline
+
+**The Orchestra must always function as one complete pipeline.**
+
+- Every request must follow the same verified flow.
+- **No feature may bypass the Orchestra.**
+
+> Added in Phase 4.0 (matches the brief's "Rule #21").
+
 ---
 
 ## How these rules are applied today

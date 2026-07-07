@@ -25,7 +25,7 @@ class Settings(BaseSettings):
 
     # --- Application metadata ------------------------------------------------
     APP_NAME: str = "Mini SoulSpace"
-    APP_PHASE: str = "3.9"
+    APP_PHASE: str = "4.0"
     ENVIRONMENT: str = "development"
     DEBUG: bool = True
     API_PREFIX: str = "/api"

@@ -16,6 +16,7 @@ from sqlalchemy.orm import Session
 from app.models.soulbook import (
     ContentFormat,
     SoulBook,
+    SoulBookmark,
     SoulChapter,
     SoulPage,
     SoulRecentBook,
@@ -392,6 +393,48 @@ def soft_delete_page(
     page = get_page(db, user_id, book_id, chapter_id, page_id)
     page.is_deleted = True
     db.flush()
+
+
+# ── Ribbon bookmark (the "close book" experience) ────────────────────────────
+def set_bookmark(
+    db: Session,
+    user_id: uuid.UUID,
+    book_id: uuid.UUID,
+    chapter_id: uuid.UUID,
+    page_id: uuid.UUID,
+    *,
+    cursor: int | None = None,
+) -> SoulBookmark:
+    """Upsert the user's single ribbon bookmark (one per user)."""
+
+    get_page(db, user_id, book_id, chapter_id, page_id)  # ownership check
+    bookmark = db.scalar(select(SoulBookmark).where(SoulBookmark.user_id == user_id))
+    label = str(cursor) if cursor is not None else None
+    if bookmark is None:
+        bookmark = SoulBookmark(
+            user_id=user_id, book_id=book_id, chapter_id=chapter_id, page_id=page_id, label=label
+        )
+        db.add(bookmark)
+    else:
+        bookmark.book_id = book_id
+        bookmark.chapter_id = chapter_id
+        bookmark.page_id = page_id
+        bookmark.label = label
+    db.flush()
+    return bookmark
+
+
+def get_bookmark(db: Session, user_id: uuid.UUID) -> SoulBookmark | None:
+    """Return the user's ribbon bookmark, if its target still exists."""
+
+    bookmark = db.scalar(select(SoulBookmark).where(SoulBookmark.user_id == user_id))
+    if bookmark is None or bookmark.chapter_id is None or bookmark.page_id is None:
+        return None
+    try:
+        get_page(db, user_id, bookmark.book_id, bookmark.chapter_id, bookmark.page_id)
+    except NotFoundError:
+        return None
+    return bookmark
 
 
 # ── Search ───────────────────────────────────────────────────────────────────

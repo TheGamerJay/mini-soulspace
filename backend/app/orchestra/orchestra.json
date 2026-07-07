@@ -1,0 +1,9 @@
+{
+  "log_execution": true,
+  "trace_requests": true,
+  "save_node_metrics": true,
+  "allow_parallel_nodes": false,
+  "performance_metrics": true,
+  "debug_mode": false,
+  "quality_retry_limit": 1
+}

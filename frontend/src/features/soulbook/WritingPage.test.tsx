@@ -11,12 +11,14 @@ vi.mock("next/navigation", () => ({
 const getPage = vi.fn();
 const updatePage = vi.fn();
 const autosavePage = vi.fn();
+const closePage = vi.fn();
 vi.mock("@/lib/api", () => ({
   ApiError: class ApiError extends Error {},
   soulApi: {
     getPage: (...a: unknown[]) => getPage(...a),
     updatePage: (...a: unknown[]) => updatePage(...a),
     autosavePage: (...a: unknown[]) => autosavePage(...a),
+    closePage: (...a: unknown[]) => closePage(...a),
   },
 }));
 
@@ -77,5 +79,43 @@ describe("WritingPage", () => {
     });
     await user.click(screen.getByRole("button", { name: /^save$/i }));
     await waitFor(() => expect(updatePage).toHaveBeenCalled());
+  });
+
+  it("Close SoulDiary shows the reflection beneath the page and the ribbon", async () => {
+    closePage.mockResolvedValue({
+      reflection: {
+        trace_id: "t1",
+        delivered: true,
+        status: "delivered",
+        text: "Thank you for writing this — it belongs in your story.",
+        memory_updates: [],
+        events: ["ConversationDelivered"],
+        failure_reason: null,
+        total_ms: 42,
+      },
+      bookmark: {
+        book_id: "b1", chapter_id: "c1", page_id: "p1", cursor: 5,
+        book_title: "B", chapter_title: "C", page_title: "P",
+      },
+    });
+    const user = userEvent.setup();
+    render(<WritingPage />);
+    await screen.findByLabelText("Writing area");
+    await user.click(screen.getByRole("button", { name: /close souldiary/i }));
+    await waitFor(() => expect(closePage).toHaveBeenCalled());
+    expect(
+      await screen.findByText("Thank you for writing this — it belongs in your story."),
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText("Ribbon bookmark")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /return to the shelf/i })).toBeInTheDocument();
+  });
+
+  it("failed reflection still keeps the page safe (gentle fallback)", async () => {
+    closePage.mockRejectedValue(new Error("orchestra down"));
+    const user = userEvent.setup();
+    render(<WritingPage />);
+    await screen.findByLabelText("Writing area");
+    await user.click(screen.getByRole("button", { name: /close souldiary/i }));
+    expect(await screen.findByText(/safely kept in your SoulDiary/i)).toBeInTheDocument();
   });
 });

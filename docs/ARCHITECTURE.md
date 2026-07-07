@@ -233,8 +233,14 @@ Memory Writer → Final Responder     (Safety may short-circuit to a safe respon
   citations prepared as typed placeholders. See
   [Conversation Composer](CONVERSATION_COMPOSER.md).
 
-**All 10 Orchestra nodes are implemented.** Next: Phase 4.0 wires them into one
-end-to-end flow (Orchestra Integration & Validation).
+**All 10 Orchestra nodes are implemented and — as of Phase 4.0 — integrated into
+one operational pipeline** (`app/orchestra/pipeline.py`): trace IDs through every
+node, structured content-free logging, per-node metrics, configurable
+`orchestra.json`, crisis short-circuit to deterministic templates, quality retry,
+and failure recovery that can never lose a diary page. The frontend "Close
+SoulDiary" flow saves, reflects, bookmarks (ribbon), closes the book, and reopens
+to the bookmarked page. **No feature may bypass the Orchestra** (Rule 21). See
+[Orchestra Integration](ORCHESTRA_INTEGRATION.md).
 
 Every node must obey the permanent
 [Orchestra Engineering Rules](ORCHESTRA_ENGINEERING_RULES.md) — the engineering

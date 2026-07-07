@@ -8,7 +8,10 @@
 import type {
   Agreement,
   AuthResponse,
+  Bookmark,
+  ClosePageResponse,
   PageSaveResult,
+  Reflection,
   RegisterPayload,
   SearchResults,
   SoulBook,
@@ -157,4 +160,22 @@ export const soulApi = {
   // Search
   search: (q: string) =>
     request<SearchResults>(`${base}/search?q=${encodeURIComponent(q)}`),
+
+  // The Orchestra (Phase 4.0): the SoulDiary talks back
+  closePage: (
+    bookId: string,
+    chapterId: string,
+    pageId: string,
+    payload: { title?: string; content?: string; cursor?: number },
+  ) =>
+    request<ClosePageResponse>(
+      `${base}/${bookId}/chapters/${chapterId}/pages/${pageId}/close`,
+      { method: "POST", body: JSON.stringify(payload) },
+    ),
+  reflect: (bookId: string, chapterId: string, pageId: string) =>
+    request<Reflection>(
+      `${base}/${bookId}/chapters/${chapterId}/pages/${pageId}/reflect`,
+      { method: "POST" },
+    ),
+  getBookmark: () => request<Bookmark | null>(`${base}/bookmark`),
 };

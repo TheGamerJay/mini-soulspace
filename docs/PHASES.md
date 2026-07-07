@@ -222,10 +222,26 @@ of `app.orchestra.composer`. **All 10 Orchestra nodes now exist.**
 
 - [Conversation Composer](CONVERSATION_COMPOSER.md) · Source: `backend/app/orchestra/composer/`.
 
+## Phase 4.0 — Orchestra Integration & Validation ✅ (current)
+
+**The SoulDiary talks back.** All ten nodes wired into one pipeline
+(`app/orchestra/pipeline.py`) — nothing bypasses it (Rule 21). Orchestra **Trace
+ID** through every node; structured, content-free logging; per-node metrics +
+slowest node; configurable `orchestra.json` (nothing hardcoded); **failure
+recovery** (stop safely, structured failure, page never lost, memory failures
+never block delivery); crisis short-circuit to deterministic templates (still
+quality-verified, never stored); quality retry. New API: `close` (save + bookmark
++ orchestra), `reflect`, `bookmark`. Frontend: **Close SoulDiary** → reflection
+beneath the writing → ribbon bookmark → book closes → shelf; Soul Library shows
+the ribboned book + "Continue your story" reopening to the bookmarked page.
+Added **Constitution Rule 21 — one complete pipeline**. Pipeline **100%
+coverage**; 34 true end-to-end tests across 20+ validation scenarios.
+
+- [Orchestra Integration](ORCHESTRA_INTEGRATION.md) · Source: `backend/app/orchestra/pipeline.py`.
+
 ## Future roadmap
 
-- **Phase 4.0** — Orchestra Integration & Validation: wire all ten nodes into
-  one end-to-end flow (page save → reflection delivered).
+- **Phase 4.1** — Soul Companion Experience.
 - **Phase 4+** — Semantic memory (pgvector embeddings + recall).
 - **Phase 5** — Conversation threads on pages.
 - **Phase 6** — Emotional analytics, charts and timeline.

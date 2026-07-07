@@ -350,6 +350,17 @@ frontend events; attachment/action/notification/citation architecture prepared a
 typed placeholders. Assemble only, **no AI**, 100% coverage. **All 10 Orchestra
 nodes now exist.** See [Conversation Composer](docs/CONVERSATION_COMPOSER.md).
 
+**Phase 4.0 — Orchestra Integration & Validation** wires all ten nodes into one
+pipeline (`backend/app/orchestra/pipeline.py`) — **the SoulDiary talks back.**
+Trace IDs follow every request through every node; structured content-free
+logging; per-node metrics; configurable `orchestra.json`; crisis short-circuit
+to deterministic, quality-verified templates; quality retry; and failure
+recovery that can never lose a diary page. Closing the SoulDiary saves the page,
+runs the Orchestra, shows the reflection beneath the writing, slides in the
+ribbon bookmark, and returns the book to the shelf — reopening continues at the
+bookmarked page. Pipeline 100% covered by 34 true end-to-end tests. See
+[Orchestra Integration](docs/ORCHESTRA_INTEGRATION.md).
+
 ## 🗺️ Future Roadmap
 
 Auth → Diary storage → Reflection engine → Semantic memory → Analytics &
