@@ -239,9 +239,23 @@ coverage**; 34 true end-to-end tests across 20+ validation scenarios.
 
 - [Orchestra Integration](ORCHESTRA_INTEGRATION.md) · Source: `backend/app/orchestra/pipeline.py`.
 
-## Future roadmap
+## Phase 4.1 — Soul Companion Experience ✅ (current)
 
-- **Phase 4.1** — Soul Companion Experience.
+No new AI — the SoulDiary becomes a **premium journaling experience** (Rule 22:
+not a chat application). Quiet, uninterrupted writing; **Save & Close**
+choreography (fade → page turn → companion glow, never spinners → **ink-written
+reflection** with divider/flourish/seal → colored ribbon → book closes → shelf);
+"Continue your story" reopening. **SoulBook personalization** (cover color/
+material/icon/category/ribbon color/favorite/shelf position — migration 0005;
+favorites float to the top) with a Customize dialog and keepsake default shelf.
+**Companion Themes** (appearance only): Midnight/Parchment/Galaxy implemented,
+five more architecture-ready — all via CSS variables, user-selectable, no-flash.
+Accessibility: reduced motion, labelled controls, focus-visible, screen-reader
+reflection text. Backend 343 + frontend 29 tests green.
+
+- [Soul Companion Experience](SOUL_COMPANION_EXPERIENCE.md).
+
+## Future roadmap
 - **Phase 4+** — Semantic memory (pgvector embeddings + recall).
 - **Phase 5** — Conversation threads on pages.
 - **Phase 6** — Emotional analytics, charts and timeline.

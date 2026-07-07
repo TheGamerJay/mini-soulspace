@@ -46,6 +46,15 @@ class SoulBook(Base, TimestampMixin):
     is_deleted: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False, index=True)
     last_opened_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
+    # --- Personalization (Phase 4.1): every SoulBook a treasured keepsake -----
+    cover_color: Mapped[str] = mapped_column(String(20), nullable=False, default="#6d5bd0")
+    cover_material: Mapped[str] = mapped_column(String(30), nullable=False, default="leather")
+    icon: Mapped[str] = mapped_column(String(16), nullable=False, default="📔")
+    category: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    ribbon_color: Mapped[str] = mapped_column(String(20), nullable=False, default="#e0b64c")
+    is_favorite: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False, index=True)
+    shelf_position: Mapped[int | None] = mapped_column(Integer, nullable=True)
+
     chapters: Mapped[list[SoulChapter]] = relationship(
         back_populates="book", cascade="all, delete-orphan"
     )

@@ -18,6 +18,7 @@ vi.mock("@/lib/api", () => ({
     createBook: (...a: unknown[]) => createBook(...a),
     search: (...a: unknown[]) => search(...a),
     getBookmark: () => Promise.resolve(null),
+    updateBook: () => Promise.resolve({}),
   },
 }));
 

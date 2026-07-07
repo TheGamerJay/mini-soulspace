@@ -40,12 +40,31 @@ export interface SoulBook {
   title: string;
   description: string | null;
   cover_style: string;
+  cover_color: string;
+  cover_material: string;
+  icon: string;
+  category: string | null;
+  ribbon_color: string;
+  is_favorite: boolean;
+  shelf_position: number | null;
   is_archived: boolean;
   is_deleted: boolean;
   created_at: string;
   updated_at: string;
   last_opened_at: string | null;
   chapter_count: number;
+}
+
+export interface SoulBookPatch {
+  title?: string;
+  description?: string;
+  cover_color?: string;
+  cover_material?: string;
+  icon?: string;
+  category?: string;
+  ribbon_color?: string;
+  is_favorite?: boolean;
+  shelf_position?: number;
 }
 
 export interface SoulChapter {

@@ -361,6 +361,16 @@ ribbon bookmark, and returns the book to the shelf — reopening continues at th
 bookmarked page. Pipeline 100% covered by 34 true end-to-end tests. See
 [Orchestra Integration](docs/ORCHESTRA_INTEGRATION.md).
 
+**Phase 4.1 — Soul Companion Experience** turns the SoulDiary into a premium
+journaling experience — **not a chat application** (Rule 22). Quiet writing;
+Save & Close choreography (companion glow — never spinners — then the reflection
+**writes itself in ink**, a colored ribbon slides in, and the book returns to the
+shelf); SoulBook personalization (cover color/material/icon/category/ribbon/
+favorites, with a Customize dialog); **Companion Themes** (Midnight · Classic
+Parchment · Galaxy, five more architecture-ready) via CSS variables — appearance
+only, never behavior; and reduced-motion/screen-reader accessibility throughout.
+See [Soul Companion Experience](docs/SOUL_COMPANION_EXPERIENCE.md).
+
 ## 🗺️ Future Roadmap
 
 Auth → Diary storage → Reflection engine → Semantic memory → Analytics &

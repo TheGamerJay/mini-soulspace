@@ -27,12 +27,24 @@ class SoulBookCreate(BaseModel):
     title: str = Field(min_length=1, max_length=150)
     description: str | None = Field(default=None, max_length=500)
     cover_style: str | None = Field(default=None, max_length=40)
+    cover_color: str | None = Field(default=None, max_length=20)
+    cover_material: str | None = Field(default=None, max_length=30)
+    icon: str | None = Field(default=None, max_length=16)
+    category: str | None = Field(default=None, max_length=50)
+    ribbon_color: str | None = Field(default=None, max_length=20)
 
 
 class SoulBookUpdate(BaseModel):
     title: str | None = Field(default=None, min_length=1, max_length=150)
     description: str | None = Field(default=None, max_length=500)
     cover_style: str | None = Field(default=None, max_length=40)
+    cover_color: str | None = Field(default=None, max_length=20)
+    cover_material: str | None = Field(default=None, max_length=30)
+    icon: str | None = Field(default=None, max_length=16)
+    category: str | None = Field(default=None, max_length=50)
+    ribbon_color: str | None = Field(default=None, max_length=20)
+    is_favorite: bool | None = None
+    shelf_position: int | None = Field(default=None, ge=0)
 
 
 class SoulBookRead(BaseModel):
@@ -42,6 +54,13 @@ class SoulBookRead(BaseModel):
     title: str
     description: str | None
     cover_style: str
+    cover_color: str
+    cover_material: str
+    icon: str
+    category: str | None
+    ribbon_color: str
+    is_favorite: bool
+    shelf_position: int | None
     is_archived: bool
     is_deleted: bool
     created_at: datetime

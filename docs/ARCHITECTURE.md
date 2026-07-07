@@ -233,6 +233,13 @@ Memory Writer → Final Responder     (Safety may short-circuit to a safe respon
   citations prepared as typed placeholders. See
   [Conversation Composer](CONVERSATION_COMPOSER.md).
 
+**Phase 4.1 layers the Soul Companion Experience on top**: quiet writing, the
+Save & Close choreography (companion glow → ink-written reflection → colored
+ribbon → book close), SoulBook personalization (cover/material/icon/category/
+ribbon/favorite — migration 0005), and **Companion Themes** via CSS variables
+(Midnight/Parchment/Galaxy; appearance only, never behavior — Rule 22). See
+[Soul Companion Experience](SOUL_COMPANION_EXPERIENCE.md).
+
 **All 10 Orchestra nodes are implemented and — as of Phase 4.0 — integrated into
 one operational pipeline** (`app/orchestra/pipeline.py`): trace IDs through every
 node, structured content-free logging, per-node metrics, configurable

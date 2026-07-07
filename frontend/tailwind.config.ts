@@ -9,16 +9,21 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Theme-aware palette: every color resolves through CSS variables so
+        // Companion Themes restyle the whole SoulDiary without redesign.
         soul: {
-          bg: "#0b0a1a",
-          surface: "#141230",
-          primary: "#7c6cff",
-          accent: "#b7a6ff",
-          muted: "#9a94c4",
+          bg: "var(--soul-bg)",
+          surface: "var(--soul-surface)",
+          primary: "var(--soul-primary)",
+          accent: "var(--soul-accent)",
+          muted: "var(--soul-muted)",
+          ink: "var(--soul-ink)",
+          paper: "var(--soul-paper)",
         },
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        reflection: ["var(--font-reflection)", "Georgia", "serif"],
       },
     },
   },

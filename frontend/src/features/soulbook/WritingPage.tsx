@@ -1,12 +1,13 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { InkText } from "@/components/InkText";
 import { ApiError, soulApi } from "@/lib/api";
 import { parseSoulPath } from "@/lib/soulPath";
-import type { Reflection, SoulPage } from "@/lib/types";
+import type { Reflection, SoulBook, SoulPage } from "@/lib/types";
 
 type SaveStatus = "saved" | "saving" | "unsaved" | "failed";
 type CloseState = "open" | "closing" | "reflected" | "shelving";
@@ -39,6 +40,8 @@ export function WritingPage() {
   const [error, setError] = useState<string | null>(null);
   const [closeState, setCloseState] = useState<CloseState>("open");
   const [reflection, setReflection] = useState<Reflection | null>(null);
+  const [book, setBook] = useState<SoulBook | null>(null);
+  const reduceMotion = useReducedMotion();
 
   const loadedRef = useRef(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -63,6 +66,8 @@ export function WritingPage() {
         setError(err instanceof ApiError ? err.message : "Could not open this page."),
       )
       .finally(() => setLoading(false));
+    // The book's personalization (ribbon color) shapes the closing experience.
+    soulApi.getBook(bookId).then(setBook).catch(() => setBook(null));
   }, [bookId, chapterId, pageId]);
 
   const save = useCallback(
@@ -119,9 +124,9 @@ export function WritingPage() {
 
   const returnToShelf = useCallback(() => {
     setCloseState("shelving");
-    // Let the book-closing animation play, then slide back onto the shelf.
-    setTimeout(() => router.push("/soul-library"), 650);
-  }, [router]);
+    // Let the book close and slide back onto the shelf — never rushed.
+    setTimeout(() => router.push("/soul-library"), reduceMotion ? 50 : 900);
+  }, [router, reduceMotion]);
 
   // Guard against losing unsaved work.
   useEffect(() => {
@@ -161,27 +166,39 @@ export function WritingPage() {
         </button>
         <div className="flex items-center gap-3">
           <StatusPill status={status} />
-          {!closing && (
-            <>
-              <button
-                onClick={() => save(false)}
-                className="rounded-full border border-soul-primary/40 px-5 py-1.5 text-sm font-semibold text-soul-primary transition-colors hover:text-soul-accent"
-              >
-                Save
-              </button>
-              <button
-                onClick={closeSoulDiary}
-                className="rounded-full bg-soul-primary px-5 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-soul-accent"
-              >
-                Close SoulDiary
-              </button>
-            </>
-          )}
+          <AnimatePresence>
+            {!closing && (
+              <motion.div exit={{ opacity: 0 }} transition={{ duration: 0.5 }} className="flex gap-3">
+                <button
+                  onClick={() => save(false)}
+                  className="rounded-full border border-soul-primary/40 px-5 py-1.5 text-sm font-semibold text-soul-primary transition-colors hover:text-soul-accent"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={closeSoulDiary}
+                  className="rounded-full bg-soul-primary px-5 py-1.5 text-sm font-semibold text-white transition-all hover:bg-soul-accent hover:shadow-lg"
+                >
+                  Save &amp; Close
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 
-      {/* Journal page (with the ribbon bookmark once closed) */}
-      <div className="relative overflow-hidden rounded-2xl border border-soul-primary/20 bg-soul-surface/60 p-6 shadow-xl">
+      {/* Journal page: soft page-turn on close, ribbon in the book's color */}
+      <motion.div
+        animate={
+          closeState === "closing" && !reduceMotion
+            ? { rotateY: [0, -7, 0], transition: { duration: 1.1, ease: "easeInOut" } }
+            : {}
+        }
+        style={{ transformPerspective: 1200 }}
+        className={`relative overflow-hidden rounded-2xl border border-soul-primary/20 bg-soul-paper/80 p-6 shadow-xl ${
+          closeState === "closing" ? "companion-glow" : ""
+        }`}
+      >
         <AnimatePresence>
           {closeState === "reflected" || closeState === "shelving" ? (
             <motion.div
@@ -189,8 +206,9 @@ export function WritingPage() {
               aria-label="Ribbon bookmark"
               initial={{ y: -160, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.9, ease: "easeOut", delay: 0.3 }}
-              className="absolute right-8 top-0 h-24 w-4 rounded-b-md bg-gradient-to-b from-soul-primary to-soul-accent shadow-lg"
+              transition={{ duration: 1.1, ease: "easeOut", delay: 0.4 }}
+              style={{ backgroundColor: book?.ribbon_color ?? "#e0b64c" }}
+              className="absolute right-8 top-0 h-24 w-4 rounded-b-md shadow-lg"
             />
           ) : null}
         </AnimatePresence>
@@ -212,7 +230,7 @@ export function WritingPage() {
           readOnly={closing}
           className="min-h-[50vh] w-full resize-none bg-transparent font-serif text-lg leading-relaxed text-soul-accent outline-none placeholder:text-soul-muted"
         />
-      </div>
+      </motion.div>
 
       <div className="mt-4 flex flex-wrap justify-between gap-4 text-sm text-soul-muted">
         <span>Created: {fmt(page.created_at)}</span>
@@ -222,43 +240,52 @@ export function WritingPage() {
         </span>
       </div>
 
-      {/* The reflection layer: the SoulDiary talks back (Phase 4.0). */}
+      {/* The reflection layer: journal writing, never chat (Rule 22). */}
       <section data-slot="ai-reflection" className="mt-8">
         {closeState === "open" && (
           <div className="rounded-2xl border border-dashed border-soul-primary/15 p-4 text-center text-xs text-soul-muted/60">
-            When you close your SoulDiary, it will reflect on what you wrote.
+            When you close your SoulDiary, it will quietly reflect with you.
           </div>
         )}
         {closeState === "closing" && (
-          <div
-            role="status"
-            className="animate-pulse rounded-2xl border border-soul-primary/20 bg-soul-surface/40 p-6 text-center text-sm text-soul-muted"
-          >
-            Your SoulDiary is reading your words…
+          /* A subtle companion glow — no spinners, no typing bubbles. */
+          <div role="status" className="flex justify-center py-10">
+            <span className="sr-only">Your SoulDiary is reflecting.</span>
+            <span aria-hidden className="companion-glow inline-block rounded-full bg-soul-paper px-6 py-3 text-2xl">
+              ❧
+            </span>
           </div>
         )}
         {(closeState === "reflected" || closeState === "shelving") && (
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            className="rounded-2xl border border-soul-primary/25 bg-soul-surface/70 p-6 shadow-lg"
+            transition={{ duration: 0.9, ease: "easeOut" }}
+            className="rounded-2xl border border-soul-primary/20 bg-soul-paper/80 px-8 py-7 shadow-lg"
           >
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-soul-primary">
-              Your SoulDiary reflects
-            </p>
+            {/* Soft divider with a decorative flourish */}
+            <div className="mb-5 flex items-center gap-4" aria-hidden>
+              <span className="h-px flex-1 bg-gradient-to-r from-transparent via-soul-primary/40 to-transparent" />
+              <span className="text-soul-primary/70">❦</span>
+              <span className="h-px flex-1 bg-gradient-to-r from-transparent via-soul-primary/40 to-transparent" />
+            </div>
             {reflection?.delivered ? (
-              <p className="whitespace-pre-wrap font-serif text-lg leading-relaxed text-soul-accent">
-                {reflection.text}
-              </p>
+              <InkText
+                text={reflection.text}
+                className="font-reflection text-lg leading-loose text-soul-ink"
+              />
             ) : (
-              <p className="font-serif text-lg leading-relaxed text-soul-muted">
+              <p className="font-reflection text-lg leading-loose text-soul-muted">
                 Your words are safely kept in your SoulDiary. A reflection will be
                 waiting another time.
               </p>
             )}
+            {/* Companion seal */}
+            <p aria-hidden className="mt-4 text-right text-soul-primary/60">
+              ✒
+            </p>
             {reflection?.memory_updates?.length ? (
-              <p className="mt-4 text-xs text-soul-muted">
+              <p className="mt-1 text-xs text-soul-muted">
                 🕮 A memory was {reflection.memory_updates[0].op === "update" ? "updated" : "kept"}.
               </p>
             ) : null}

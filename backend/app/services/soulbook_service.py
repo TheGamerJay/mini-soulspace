@@ -55,16 +55,18 @@ def _book_query(db: Session, user_id: uuid.UUID):
 
 
 def _apply_sort(stmt, sort: SortOption):
+    # Favorite pins always float to the top of the shelf (Phase 4.1).
+    fav = SoulBook.is_favorite.desc()
     if sort == SortOption.ALPHABETICAL:
-        return stmt.order_by(func.lower(SoulBook.title).asc())
+        return stmt.order_by(fav, func.lower(SoulBook.title).asc())
     if sort == SortOption.NEWEST:
-        return stmt.order_by(SoulBook.created_at.desc())
+        return stmt.order_by(fav, SoulBook.created_at.desc())
     if sort == SortOption.OLDEST:
-        return stmt.order_by(SoulBook.created_at.asc())
+        return stmt.order_by(fav, SoulBook.created_at.asc())
     if sort == SortOption.RECENTLY_UPDATED:
-        return stmt.order_by(SoulBook.updated_at.desc())
+        return stmt.order_by(fav, SoulBook.updated_at.desc())
     # recently_opened (default): nulls last-ish via coalesce to created_at
-    return stmt.order_by(func.coalesce(SoulBook.last_opened_at, SoulBook.created_at).desc())
+    return stmt.order_by(fav, func.coalesce(SoulBook.last_opened_at, SoulBook.created_at).desc())
 
 
 def _with_chapter_count(db: Session, book: SoulBook) -> SoulBook:
@@ -106,12 +108,17 @@ def get_book(db: Session, user_id: uuid.UUID, book_id: uuid.UUID, *, touch: bool
 
 
 def create_book(db: Session, user_id: uuid.UUID, payload: SoulBookCreate) -> SoulBook:
+    extras = payload.model_dump(
+        include={"cover_color", "cover_material", "icon", "category", "ribbon_color"},
+        exclude_none=True,
+    )
     book = SoulBook(
         user_id=user_id,
         title=payload.title.strip(),
         description=payload.description,
         cover_style=payload.cover_style or "classic",
         last_opened_at=_now(),
+        **extras,
     )
     db.add(book)
     db.flush()

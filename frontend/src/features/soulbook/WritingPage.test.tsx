@@ -12,6 +12,7 @@ const getPage = vi.fn();
 const updatePage = vi.fn();
 const autosavePage = vi.fn();
 const closePage = vi.fn();
+const getBook = vi.fn();
 vi.mock("@/lib/api", () => ({
   ApiError: class ApiError extends Error {},
   soulApi: {
@@ -19,6 +20,7 @@ vi.mock("@/lib/api", () => ({
     updatePage: (...a: unknown[]) => updatePage(...a),
     autosavePage: (...a: unknown[]) => autosavePage(...a),
     closePage: (...a: unknown[]) => closePage(...a),
+    getBook: (...a: unknown[]) => getBook(...a),
   },
 }));
 
@@ -44,6 +46,7 @@ describe("WritingPage", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     getPage.mockResolvedValue(page);
+    getBook.mockResolvedValue({ id: "b1", title: "Journal", ribbon_color: "#e0b64c" });
     updatePage.mockResolvedValue({ ...page, updated_at: "2026-07-01T01:00:00Z" });
     autosavePage.mockResolvedValue({
       id: "p1",
@@ -81,7 +84,7 @@ describe("WritingPage", () => {
     await waitFor(() => expect(updatePage).toHaveBeenCalled());
   });
 
-  it("Close SoulDiary shows the reflection beneath the page and the ribbon", async () => {
+  it("Save & Close shows the ink-written reflection and the ribbon", async () => {
     closePage.mockResolvedValue({
       reflection: {
         trace_id: "t1",
@@ -101,10 +104,11 @@ describe("WritingPage", () => {
     const user = userEvent.setup();
     render(<WritingPage />);
     await screen.findByLabelText("Writing area");
-    await user.click(screen.getByRole("button", { name: /close souldiary/i }));
+    await user.click(screen.getByRole("button", { name: /save & close/i }));
     await waitFor(() => expect(closePage).toHaveBeenCalled());
+    // The reflection appears as journal ink (InkText labels the paragraph).
     expect(
-      await screen.findByText("Thank you for writing this — it belongs in your story."),
+      await screen.findByLabelText("Thank you for writing this — it belongs in your story."),
     ).toBeInTheDocument();
     expect(screen.getByLabelText("Ribbon bookmark")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /return to the shelf/i })).toBeInTheDocument();
@@ -115,7 +119,7 @@ describe("WritingPage", () => {
     const user = userEvent.setup();
     render(<WritingPage />);
     await screen.findByLabelText("Writing area");
-    await user.click(screen.getByRole("button", { name: /close souldiary/i }));
+    await user.click(screen.getByRole("button", { name: /save & close/i }));
     expect(await screen.findByText(/safely kept in your SoulDiary/i)).toBeInTheDocument();
   });
 });

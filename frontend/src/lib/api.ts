@@ -15,6 +15,7 @@ import type {
   RegisterPayload,
   SearchResults,
   SoulBook,
+  SoulBookPatch,
   SoulChapter,
   SoulPage,
   SortOption,
@@ -95,7 +96,7 @@ export const soulApi = {
   createBook: (data: { title: string; description?: string }) =>
     request<SoulBook>(base, { method: "POST", body: JSON.stringify(data) }),
   getBook: (bookId: string) => request<SoulBook>(`${base}/${bookId}`),
-  updateBook: (bookId: string, patch: { title?: string; description?: string }) =>
+  updateBook: (bookId: string, patch: SoulBookPatch) =>
     request<SoulBook>(`${base}/${bookId}`, { method: "PATCH", body: JSON.stringify(patch) }),
   deleteBook: (bookId: string) =>
     request<void>(`${base}/${bookId}`, { method: "DELETE" }),

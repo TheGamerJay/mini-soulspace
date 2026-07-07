@@ -192,6 +192,17 @@ frontend.**
 
 > Added in Phase 4.0 (matches the brief's "Rule #21").
 
+## Rule 22 — The SoulDiary Is Not a Chat Application
+
+**The user's writing is always the primary experience. Mini's reflections are
+secondary.**
+
+- Mini exists to **enrich** the journal, never to replace it.
+- No chat bubbles, no typing indicators, no interruptions while writing.
+- The journal should always feel **calm, beautiful, and personal.**
+
+> Added in Phase 4.1 (matches the brief's "Rule #22").
+
 ---
 
 ## How these rules are applied today

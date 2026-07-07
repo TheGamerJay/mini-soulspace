@@ -2,8 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* ── Companion Themes (Phase 4.1) ─────────────────────────────────────────────
+   Themes ONLY affect appearance — never personality, memory, safety, behavior.
+   Each theme is a CSS-variable set selected via [data-theme] on <html>.
+   Future themes (morning-light, autumn, winter, spring, rainy-day) plug in by
+   adding a variable block here + a registry entry in lib/themes.ts. */
+
+:root,
+[data-theme="midnight"] {
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-reflection: "Segoe Script", "Bradley Hand", "Comic Sans MS", cursive;
+
+  --soul-bg: #0b0a1a;
+  --soul-surface: #141230;
+  --soul-primary: #7c6cff;
+  --soul-accent: #b7a6ff;
+  --soul-muted: #9a94c4;
+  --soul-ink: #d9d2ff; /* reflection ink */
+  --soul-paper: #171436; /* journal page */
+  --soul-glow: rgba(124, 108, 255, 0.28); /* companion presence */
+  --soul-shelf: linear-gradient(180deg, #1b1840, #0e0c22);
+}
+
+[data-theme="parchment"] {
+  --soul-bg: #f3ead7;
+  --soul-surface: #efe2c5;
+  --soul-primary: #8a5a2b;
+  --soul-accent: #4a3520;
+  --soul-muted: #8d7a5c;
+  --soul-ink: #3f2f1a;
+  --soul-paper: #f8f1de;
+  --soul-glow: rgba(138, 90, 43, 0.22);
+  --soul-shelf: linear-gradient(180deg, #d9c69c, #b89d6e);
+}
+
+[data-theme="galaxy"] {
+  --soul-bg: #050514;
+  --soul-surface: #12102e;
+  --soul-primary: #9d7bff;
+  --soul-accent: #e3d2ff;
+  --soul-muted: #8f86c9;
+  --soul-ink: #efe6ff;
+  --soul-paper: #100d2b;
+  --soul-glow: rgba(157, 123, 255, 0.35);
+  --soul-shelf: linear-gradient(180deg, #201a4d, #0a081f);
 }
 
 html,
@@ -13,10 +55,66 @@ body {
 
 body {
   @apply bg-soul-bg text-soul-accent antialiased;
+  transition: background-color 0.6s ease, color 0.6s ease;
 }
 
 /* Suppress native password reveal icons — we use a custom 🙈/👁️ toggle. */
 input[type="password"]::-ms-reveal,
 input[type="password"]::-ms-clear {
   display: none;
+}
+
+/* ── The companion's quiet presence (no spinners, no typing bubbles) ───────── */
+.companion-glow {
+  animation: companion-breathe 3.2s ease-in-out infinite;
+  box-shadow: 0 0 44px 6px var(--soul-glow);
+}
+
+@keyframes companion-breathe {
+  0%,
+  100% {
+    box-shadow: 0 0 30px 2px var(--soul-glow);
+  }
+  50% {
+    box-shadow: 0 0 56px 10px var(--soul-glow);
+  }
+}
+
+/* Ink gradually appears — an invisible fountain pen writing on the page. */
+.ink-word {
+  opacity: 0;
+  filter: blur(3px);
+  animation: ink-appear 0.9s ease forwards;
+}
+
+@keyframes ink-appear {
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* ── Accessibility: calm for everyone ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .ink-word {
+    opacity: 1;
+    filter: none;
+    animation: none;
+  }
+  .companion-glow {
+    animation: none;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--soul-primary);
+  outline-offset: 2px;
 }
