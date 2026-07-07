@@ -171,6 +171,18 @@ from repeatedly resurfacing.
 
 > Added in Phase 3.8.5 (matches the brief's "Rule #19").
 
+## Rule 20 — One Gateway to the Frontend
+
+**The Conversation Composer is the single gateway between the Orchestra and the
+frontend.**
+
+- All user-facing communication must pass through it.
+- No Orchestra node may communicate directly with the frontend.
+- Only **approved** responses are delivered; rejected or needs-retry responses
+  never reach the frontend — they become structured failure packages.
+
+> Added in Phase 3.9 (matches the brief's "Rule #20").
+
 ---
 
 ## How these rules are applied today

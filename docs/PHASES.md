@@ -209,12 +209,24 @@ memory must be explainable**. **100% coverage** of `app.orchestra.intelligence`.
 
 - [Memory Intelligence Engine](MEMORY_INTELLIGENCE_ENGINE.md) · Source: `backend/app/orchestra/intelligence/`.
 
+## Phase 3.9 — Conversation Composer ✅ (current)
+
+The **tenth and final Orchestra node** (the planned "Final Responder", renamed).
+The **single gateway to the frontend**: only approved `QualityResult`s are
+delivered, with the candidate text **exactly as approved** (never rewritten);
+rejected / needs-retry become structured **failure packages** that never reach
+the user. Packages memory updates + frontend events; attachment / action /
+notification / citation architecture prepared (typed, empty — not implemented).
+Added **Constitution Rule 20 — one gateway to the frontend**. **100% coverage**
+of `app.orchestra.composer`. **All 10 Orchestra nodes now exist.**
+
+- [Conversation Composer](CONVERSATION_COMPOSER.md) · Source: `backend/app/orchestra/composer/`.
+
 ## Future roadmap
 
-- **Phase 3.9** — Final Responder (node 10), completing the Orchestra, on the
-  Phase 2.75 architecture, Phase 2.5 rules, and the
-  [Orchestra Constitution](ORCHESTRA_ENGINEERING_RULES.md).
-- **Phase 4** — Semantic memory (pgvector embeddings + recall).
+- **Phase 4.0** — Orchestra Integration & Validation: wire all ten nodes into
+  one end-to-end flow (page save → reflection delivered).
+- **Phase 4+** — Semantic memory (pgvector embeddings + recall).
 - **Phase 5** — Conversation threads on pages.
 - **Phase 6** — Emotional analytics, charts and timeline.
 - **Phase 7** — Exports (PDF / DOCX / TXT), bookmarks UI, printing.

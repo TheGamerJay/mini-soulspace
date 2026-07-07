@@ -226,8 +226,15 @@ Memory Writer → Final Responder     (Safety may short-circuit to a safe respon
   verification prep, and user-correction learning (corrections permanently
   replace and never resurface). No AI. See
   [Memory Intelligence Engine](MEMORY_INTELLIGENCE_ENGINE.md).
+- **Node 10 — Conversation Composer (Phase 3.9)** — the **single gateway to the
+  frontend** (Rule 20): delivers only approved responses (text exactly as
+  approved), packages memory updates + frontend events, and turns anything not
+  approved into a structured failure package. Attachments/actions/notifications/
+  citations prepared as typed placeholders. See
+  [Conversation Composer](CONVERSATION_COMPOSER.md).
 
-Only the **Final Responder (node 10)** remains.
+**All 10 Orchestra nodes are implemented.** Next: Phase 4.0 wires them into one
+end-to-end flow (Orchestra Integration & Validation).
 
 Every node must obey the permanent
 [Orchestra Engineering Rules](ORCHESTRA_ENGINEERING_RULES.md) — the engineering

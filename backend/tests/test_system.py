@@ -15,7 +15,7 @@ def test_root_returns_service_metadata() -> None:
     body = response.json()
     assert body["app"] == "Mini SoulSpace"
     assert body["status"] == "running"
-    assert body["phase"] == "3.8.5"
+    assert body["phase"] == "3.9"
 
 
 def test_health_returns_healthy() -> None:

@@ -341,6 +341,15 @@ resurface; frequently corrected types require stronger evidence. Deterministic,
 **no AI**, 100% coverage. See
 [Memory Intelligence Engine](docs/MEMORY_INTELLIGENCE_ENGINE.md).
 
+**Phase 3.9 — Conversation Composer** builds the **tenth and final node**
+(`backend/app/orchestra/composer/`): the **single gateway between the Orchestra
+and the frontend**. Only approved responses are delivered — with the candidate
+text exactly as approved (never rewritten); rejected / needs-retry become
+structured failure packages that never reach the user. Packages memory updates +
+frontend events; attachment/action/notification/citation architecture prepared as
+typed placeholders. Assemble only, **no AI**, 100% coverage. **All 10 Orchestra
+nodes now exist.** See [Conversation Composer](docs/CONVERSATION_COMPOSER.md).
+
 ## 🗺️ Future Roadmap
 
 Auth → Diary storage → Reflection engine → Semantic memory → Analytics &
