@@ -51,6 +51,8 @@ from app.orchestra.mini.schemas import CandidateResponse, TokenCounts
 from app.orchestra.planner import plan as planner_plan
 from app.orchestra.prompt import build as prompt_build
 from app.orchestra.quality.schemas import QualityStatus
+from app.orchestra.router import load_specialists
+from app.orchestra.router import route as router_route
 from app.orchestra.writer import DbMemoryStore
 
 logger = get_logger("app.orchestra.pipeline")
@@ -255,10 +257,11 @@ def run_orchestra(
         # 5. Reflection Planner ------------------------------------------------
         planner = run.run("reflection_planner", lambda: planner_plan(request, guardian, retrieval))
 
-        # 6-8. Context → Prompt → Mini Engine (or crisis short-circuit) ---------
+        # 6-8. Context → Prompt → Router → Mini Services (or crisis short-circuit)
         if guardian.needs_crisis_template:
             run.skip("context_builder", "crisis_short_circuit")
             run.skip("prompt_builder", "crisis_short_circuit")
+            run.skip("specialist_router", "crisis_short_circuit")
             run.skip("mini_engine", "crisis_short_circuit")
             candidate = _crisis_candidate(request.request_id, guardian.category, guardian.confidence)
             quality = run.run(
@@ -268,7 +271,16 @@ def run_orchestra(
         else:
             context = run.run("context_builder", lambda: context_build(request, guardian, retrieval, planner))
             prompt = run.run("prompt_builder", lambda: prompt_build(context))
-            candidate = run.run("mini_engine", lambda: mini_node.generate(prompt, runtime=runtime))
+            # The Specialist Router decides WHO helps (Rule 23); the Mini Engine
+            # then executes the primary specialist's Mini Service.
+            routing = run.run(
+                "specialist_router",
+                lambda: router_route(request, meaning, guardian, planner, load_specialists()),
+            )
+            service_key = routing.primary_service
+            candidate = run.run(
+                "mini_engine", lambda: mini_node.generate(prompt, runtime=runtime, service_key=service_key)
+            )
             quality = run.run(
                 "quality_checker",
                 lambda: quality_node.check(candidate, guardian, planner, retrieval=retrieval, meaning=meaning),
@@ -278,7 +290,10 @@ def run_orchestra(
             retries = 0
             while quality.status == QualityStatus.NEEDS_RETRY and retries < config.quality_retry_limit:
                 retries += 1
-                candidate = run.run(f"mini_engine_retry_{retries}", lambda: mini_node.generate(prompt, runtime=runtime))
+                candidate = run.run(
+                    f"mini_engine_retry_{retries}",
+                    lambda: mini_node.generate(prompt, runtime=runtime, service_key=service_key),
+                )
                 quality = run.run(
                     f"quality_checker_retry_{retries}",
                     lambda: quality_node.check(candidate, guardian, planner, retrieval=retrieval, meaning=meaning),

@@ -81,8 +81,14 @@ def generate(
     timeout_s: float | None = None,
     retries: int | None = None,
     services_path: Path | str = DEFAULT_SERVICES_PATH,
+    service_key: str | None = None,
 ) -> CandidateResponse:
-    """Resolve a Mini Service and generate a candidate response."""
+    """Resolve a Mini Service and generate a candidate response.
+
+    ``service_key`` (Phase 4.2, additive) lets the Specialist Router address a
+    Mini Service directly; without it, the template's model role resolves as
+    before.
+    """
 
     if not isinstance(prompt_package, PromptPackage):
         raise MiniEngineError([err("prompt_package", "invalid_input", "Expected a PromptPackage.")])
@@ -96,12 +102,19 @@ def generate(
     except (OSError, ValueError):  # missing file / bad JSON
         raise MiniEngineError([err("config", "missing_config", "Mini service registry could not be loaded.")])
 
-    try:
-        service = resolve_service(prompt_package.model_role, registry)
-    except KeyError:
-        raise MiniEngineError(
-            [err("service", "missing_service", f"No Mini Service for role '{prompt_package.model_role.value}'.")]
-        )
+    if service_key is not None:
+        if service_key not in registry:
+            raise MiniEngineError(
+                [err("service", "missing_service", f"No Mini Service named '{service_key}'.")]
+            )
+        service = registry[service_key]
+    else:
+        try:
+            service = resolve_service(prompt_package.model_role, registry)
+        except KeyError:
+            raise MiniEngineError(
+                [err("service", "missing_service", f"No Mini Service for role '{prompt_package.model_role.value}'.")]
+            )
 
     messages = [{"role": m.role, "content": m.content} for m in prompt_package.conversation_blueprint]
     params = _params(prompt_package)

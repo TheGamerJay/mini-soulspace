@@ -255,6 +255,23 @@ reflection text. Backend 343 + frontend 29 tests green.
 
 - [Soul Companion Experience](SOUL_COMPANION_EXPERIENCE.md).
 
+## Phase 4.2 — Specialist Router & Knowledge System ✅ (current)
+
+A **permanent new Orchestra node** between Prompt Builder and the Mini Services:
+the Specialist Router decides **WHO helps** (Rule 23) — the Orchestra still
+decides HOW. Deterministic, **registry-driven** (`specialists.json` — nothing
+hardcoded): 9 capability cards (Mini Core executes; Vision/Research/Tutor/
+Creator/Canvas/Analyst/Voice/Memory are architecture) + 15 future placeholders.
+Immutable `RoutingPlan` (primary/secondary/fallback/order/unavailable/
+complexity; parallel architecture-ready). Selection from meaning/intent/guardian
+enums + requested capabilities — never keywords; unavailable specialists fall
+back to Mini Core and activate later purely by config; **crisis selects no
+specialists** (Guardian authority). Mini Engine gained an additive `service_key`.
+**100% router coverage**; full suite 357 green.
+
+- [Specialist Router](SPECIALIST_ROUTER.md) · [Mini Services](MINI_SERVICES.md) ·
+  Source: `backend/app/orchestra/router/`.
+
 ## Future roadmap
 - **Phase 4+** — Semantic memory (pgvector embeddings + recall).
 - **Phase 5** — Conversation threads on pages.

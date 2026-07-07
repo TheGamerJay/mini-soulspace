@@ -371,6 +371,17 @@ Parchment · Galaxy, five more architecture-ready) via CSS variables — appeara
 only, never behavior; and reduced-motion/screen-reader accessibility throughout.
 See [Soul Companion Experience](docs/SOUL_COMPANION_EXPERIENCE.md).
 
+**Phase 4.2 — Specialist Router & Knowledge System** adds a permanent Orchestra
+node (`backend/app/orchestra/router/`) that decides **WHO helps** — the
+Orchestra still decides HOW. Specialists are discovered from `specialists.json`
+capability cards (Mini Core executes today; Vision, Research, Tutor, Creator,
+Canvas, Analyst, Voice, and Memory are architecture-ready; 15 more reserved) and
+selected deterministically from meaning/intent/guardian decisions — never
+keywords. Unavailable specialists fall back to Mini Core and activate purely by
+configuration; a crisis selects **no specialists** (Guardian authority). 100%
+router coverage. See [Specialist Router](docs/SPECIALIST_ROUTER.md) and
+[Mini Services](docs/MINI_SERVICES.md).
+
 ## 🗺️ Future Roadmap
 
 Auth → Diary storage → Reflection engine → Semantic memory → Analytics &

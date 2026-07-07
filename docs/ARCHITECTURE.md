@@ -233,6 +233,13 @@ Memory Writer → Final Responder     (Safety may short-circuit to a safe respon
   citations prepared as typed placeholders. See
   [Conversation Composer](CONVERSATION_COMPOSER.md).
 
+**Phase 4.2 adds the Specialist Router** — a permanent node between the Prompt
+Builder and the Mini Services that selects WHO helps (one, several, or none)
+from the discoverable `specialists.json` registry (9 capability cards; Mini Core
+executes, 8 architecture-only; 15 future placeholders). The Guardian keeps final
+authority (crisis → no specialists), and specialists activate by configuration
+alone. See [Specialist Router](SPECIALIST_ROUTER.md) + [Mini Services](MINI_SERVICES.md).
+
 **Phase 4.1 layers the Soul Companion Experience on top**: quiet writing, the
 Save & Close choreography (companion glow → ink-written reflection → colored
 ribbon → book close), SoulBook personalization (cover/material/icon/category/

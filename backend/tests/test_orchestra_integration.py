@@ -105,6 +105,9 @@ def test_end_to_end_delivery_scenarios(db, content, book):
     # trace follows the request through every node
     assert outcome.metrics[0].node == "input_receiver"
     assert outcome.metrics[-1].node == "conversation_composer"
+    # the Specialist Router sits in the verified flow (Rule 23) — never bypassed
+    nodes = {m.node: m.status for m in outcome.metrics}
+    assert nodes["specialist_router"] == "completed"
 
 
 def test_real_crisis_uses_deterministic_template(db):
@@ -115,6 +118,7 @@ def test_real_crisis_uses_deterministic_template(db):
     assert "crisis" in outcome.package.text or "emergency" in outcome.package.text
     assert "not a crisis service" in outcome.package.text
     nodes = {m.node: m.status for m in outcome.metrics}
+    assert nodes["specialist_router"] == "skipped"  # guardian authority — no specialists
     assert nodes["mini_engine"] == "skipped"  # crisis never reaches free generation
     assert nodes["quality_checker"] == "completed"  # but IS still verified
     assert nodes["memory_writer"] == "completed"  # runs, guardian blocks storage

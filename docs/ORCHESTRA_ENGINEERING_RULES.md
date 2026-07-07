@@ -203,6 +203,20 @@ secondary.**
 
 > Added in Phase 4.1 (matches the brief's "Rule #22").
 
+## Rule 23 — Every Capability Is a Discoverable Specialist
+
+**Every capability inside Mini SoulSpace must exist as a discoverable
+specialist.**
+
+- The Orchestra never knows implementation details.
+- The **Specialist Router decides WHO can help.**
+- The **Orchestra decides HOW the conversation flows.**
+
+Specialists are discovered from the registry — never hardcoded — and adding one
+must never require an Orchestra redesign.
+
+> Added in Phase 4.2 (matches the brief's "Rule #23").
+
 ---
 
 ## How these rules are applied today
