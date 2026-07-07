@@ -1,0 +1,14 @@
+{
+  "default_timeout_seconds": 30.0,
+  "default_retries": 1,
+  "allow_parallel_execution": false,
+  "max_specialists_per_request": 3,
+  "fail_fast_on_primary_failure": true,
+  "allow_degraded_results": true,
+  "low_confidence_threshold": 0.4,
+  "dependencies": {
+    "mini_research": ["mini_vision"],
+    "mini_tutor": ["mini_vision"],
+    "mini_memory": ["mini_research"]
+  }
+}

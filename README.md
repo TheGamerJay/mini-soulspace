@@ -382,6 +382,16 @@ configuration; a crisis selects **no specialists** (Guardian authority). 100%
 router coverage. See [Specialist Router](docs/SPECIALIST_ROUTER.md) and
 [Mini Services](docs/MINI_SERVICES.md).
 
+**Phase 4.25 — Specialist Orchestrator** coordinates the specialists the Router
+selects (`backend/app/orchestra/orchestrator/`): sequential, deterministic
+execution plans with configured dependencies, bounded retries + soft timeouts, a
+**write-once workspace** (no races, no overwrites), fail-fast with fallback
+recovery, **conflict detection that never guesses**, Orchestrator-only merging,
+and a complete audit trail — specialists perform assigned work only and never
+compete or deliver directly (Rule 24). Guardian-blocked plans do nothing.
+Parallel execution is architecture-ready, not implemented. 100% coverage. See
+[Specialist Orchestrator](docs/SPECIALIST_ORCHESTRATOR.md).
+
 ## 🗺️ Future Roadmap
 
 Auth → Diary storage → Reflection engine → Semantic memory → Analytics &

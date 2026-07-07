@@ -272,6 +272,24 @@ specialists** (Guardian authority). Mini Engine gained an additive `service_key`
 - [Specialist Router](SPECIALIST_ROUTER.md) · [Mini Services](MINI_SERVICES.md) ·
   Source: `backend/app/orchestra/router/`.
 
+## Phase 4.25 — Specialist Orchestrator ✅ (current)
+
+The Router chooses the team; the **Orchestrator controls the work** (Rule 24) —
+strictly **sequential and deterministic** (parallel is architecture-only). It
+builds a dependency-aware `SpecialistExecutionPlan` from the RoutingPlan
+(configured dependencies, per-request cap), runs each task with bounded retries
++ soft timeouts, records results into a **write-once SpecialistWorkspace** (no
+races, no overwrites), skips dependents of failed dependencies (**never
+guesses**), fails fast on primary failure with **fallback recovery** (honest
+`degraded` status), detects **conflicts** between specialists (never resolved by
+guessing — sent to the Quality Checker), merges outputs (only the Orchestrator
+merges), and keeps a full ordered **audit trail**. Guardian-blocked plans do
+nothing. Config: `specialist_orchestrator.json` — nothing hardcoded. **100%
+coverage** (24 tests). Pipeline adopts it in Phase 4.3 with the first
+multi-specialist flow.
+
+- [Specialist Orchestrator](SPECIALIST_ORCHESTRATOR.md) · Source: `backend/app/orchestra/orchestrator/`.
+
 ## Future roadmap
 - **Phase 4+** — Semantic memory (pgvector embeddings + recall).
 - **Phase 5** — Conversation threads on pages.

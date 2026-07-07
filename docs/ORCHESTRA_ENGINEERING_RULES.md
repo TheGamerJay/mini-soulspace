@@ -217,6 +217,19 @@ must never require an Orchestra redesign.
 
 > Added in Phase 4.2 (matches the brief's "Rule #23").
 
+## Rule 24 — Coordinated Specialists, Never Competing
+
+- **The Router chooses specialists.**
+- **The Orchestrator coordinates specialists.**
+- **Specialists perform assigned work only.**
+
+No specialist may compete to answer the user, bypass the Orchestrator, overwrite
+another specialist's result, or deliver directly. Only the Orchestrator passes
+data between specialists and merges their outputs; conflicts are surfaced to the
+Quality Checker, never resolved by guessing.
+
+> Added in Phase 4.25 (matches the brief's "Rule #24").
+
 ---
 
 ## How these rules are applied today

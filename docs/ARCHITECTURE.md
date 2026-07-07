@@ -233,6 +233,14 @@ Memory Writer → Final Responder     (Safety may short-circuit to a safe respon
   citations prepared as typed placeholders. See
   [Conversation Composer](CONVERSATION_COMPOSER.md).
 
+**Phase 4.25 adds the Specialist Orchestrator** — the Router chooses WHO, the
+Orchestrator controls HOW they work together: sequential dependency-aware
+execution plans, bounded retries + soft timeouts, a write-once workspace,
+fail-fast + fallback recovery, conflict detection (never resolved by guessing),
+Orchestrator-only merging, and a full audit trail. Guardian-blocked plans do
+nothing. The pipeline adopts it with the first multi-specialist flow (Phase 4.3).
+See [Specialist Orchestrator](SPECIALIST_ORCHESTRATOR.md).
+
 **Phase 4.2 adds the Specialist Router** — a permanent node between the Prompt
 Builder and the Mini Services that selects WHO helps (one, several, or none)
 from the discoverable `specialists.json` registry (9 capability cards; Mini Core
