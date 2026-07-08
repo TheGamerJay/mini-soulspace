@@ -290,6 +290,23 @@ multi-specialist flow.
 
 - [Specialist Orchestrator](SPECIALIST_ORCHESTRATOR.md) · Source: `backend/app/orchestra/orchestrator/`.
 
+## Phase 4.3 — Mini Vision ✅ (current)
+
+The **first specialist** built for the Router + Orchestrator. **Observes, never
+concludes** (Rule 25): structured `VisionResult`s only — no user-facing
+language, no diagnoses, no identity. Real byte-level validation (magic-byte
+formats, PNG/JPEG header dimensions), quality flags with confidence penalties,
+injectable **VisionBackend** (default Null backend observes nothing — nothing is
+ever hallucinated; unreadable stays unreadable), **identity-protection
+sanitizer** that strips forbidden observations from any backend, medication
+label-reading-only safety, OCR/objects/layout/tables/charts/diagrams/handwriting
+/document-type structuring, config-gated features (`vision.json`), and future
+capabilities reserved (barcode → AR). The **Vision → Core orchestrated flow runs
+end-to-end**; the registry card activates the live pipeline once a perception
+backend deploys — zero code changes. **100% coverage** (28 tests).
+
+- [Mini Vision](MINI_VISION.md) · Source: `backend/app/orchestra/vision/`.
+
 ## Future roadmap
 - **Phase 4+** — Semantic memory (pgvector embeddings + recall).
 - **Phase 5** — Conversation threads on pages.

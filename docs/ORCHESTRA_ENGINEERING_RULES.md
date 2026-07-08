@@ -230,6 +230,17 @@ Quality Checker, never resolved by guessing.
 
 > Added in Phase 4.25 (matches the brief's "Rule #24").
 
+## Rule 25 — Mini Vision Observes
+
+**Mini Vision observes. It never concludes. It never advises. It never
+identifies people.**
+
+It only produces structured visual facts for the Orchestra — no user-facing
+language, no diagnoses, no identity or demographic inference, ever. Unreadable
+stays unreadable: nothing is hallucinated.
+
+> Added in Phase 4.3 (matches the brief's "Rule #25").
+
 ---
 
 ## How these rules are applied today

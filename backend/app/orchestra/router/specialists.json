@@ -18,7 +18,7 @@
     },
     "mini_vision": {
       "display_name": "Mini Vision",
-      "description": "Image understanding. Identity recognition is never supported.",
+      "description": "Image understanding (node implemented, Phase 4.3; awaiting a perception backend). Identity recognition is never supported.",
       "purpose": "Images, OCR, screenshots, charts, diagrams, objects",
       "capabilities": [
         "image_understanding", "ocr", "screenshots", "charts", "diagrams",
@@ -29,8 +29,8 @@
       "supported_outputs": ["text"],
       "priority": 80,
       "availability": "unavailable",
-      "version": "0.1",
-      "health_status": "not_deployed",
+      "version": "1.0",
+      "health_status": "no_perception_backend",
       "execution_mode": "none",
       "estimated_cost": "medium",
       "estimated_speed": "medium",

@@ -233,6 +233,13 @@ Memory Writer → Final Responder     (Safety may short-circuit to a safe respon
   citations prepared as typed placeholders. See
   [Conversation Composer](CONVERSATION_COMPOSER.md).
 
+**Phase 4.3 adds Mini Vision** — the first specialist: byte-level image
+validation, injectable perception backends (Null by default — nothing
+hallucinated), identity-protection sanitization, medication label-only safety,
+and structured `VisionResult`s. The Vision → Core orchestrated flow runs
+end-to-end; the registry card activates it live when a perception backend
+deploys. See [Mini Vision](MINI_VISION.md).
+
 **Phase 4.25 adds the Specialist Orchestrator** — the Router chooses WHO, the
 Orchestrator controls HOW they work together: sequential dependency-aware
 execution plans, bounded retries + soft timeouts, a write-once workspace,

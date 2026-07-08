@@ -392,6 +392,17 @@ compete or deliver directly (Rule 24). Guardian-blocked plans do nothing.
 Parallel execution is architecture-ready, not implemented. 100% coverage. See
 [Specialist Orchestrator](docs/SPECIALIST_ORCHESTRATOR.md).
 
+**Phase 4.3 — Mini Vision** builds the first specialist
+(`backend/app/orchestra/vision/`): the visual perception system. It **observes,
+never concludes** (Rule 25) — structured `VisionResult`s (OCR, objects, layout,
+tables, charts, handwriting, document type, quality flags) with byte-level image
+validation, injectable perception backends (nothing is ever hallucinated —
+unreadable stays unreadable), an **identity-protection sanitizer** (no faces, no
+identity, no demographics, ever), and medication **label-reading-only** safety.
+The Vision → Core flow already runs through the Specialist Orchestrator; a
+perception backend activates it live via the registry alone. 100% coverage. See
+[Mini Vision](docs/MINI_VISION.md).
+
 ## 🗺️ Future Roadmap
 
 Auth → Diary storage → Reflection engine → Semantic memory → Analytics &
